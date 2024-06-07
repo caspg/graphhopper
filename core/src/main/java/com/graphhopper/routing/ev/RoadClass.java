@@ -20,11 +20,12 @@ package com.graphhopper.routing.ev;
 import com.graphhopper.util.Helper;
 
 /**
- * This enum defines the road class of an edge. It is heavily influenced from the highway tag in OSM that can be
+ * This enum defines the road class of an edge. It is heavily influenced from
+ * the highway tag in OSM that can be
  * primary, cycleway etc. All edges that do not fit get OTHER as value.
  */
 public enum RoadClass {
-    OTHER, MOTORWAY, TRUNK, PRIMARY, SECONDARY, TERTIARY, RESIDENTIAL, UNCLASSIFIED,
+    OTHER, MOTORWAY, TRUNK, PRIMARY, SECONDARY, TERTIARY, RESIDENTIAL, UNCLASSIFIED, CONSTRUCTION,
     SERVICE, ROAD, TRACK, BRIDLEWAY, STEPS, CYCLEWAY, PATH, LIVING_STREET, FOOTWAY, PEDESTRIAN, PLATFORM, CORRIDOR;
 
     public static final String KEY = "road_class";

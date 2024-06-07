@@ -1,10 +1,8 @@
 graphhopper:
-
   # OpenStreetMap input file PBF or XML, can be changed via command line -Ddw.graphhopper.datareader.file=some.pbf
   datareader.file: ""
   # Local folder used by graphhopper to store its data
   graph.location: graph-cache
-
 
   ##### Routing Profiles ####
 
@@ -29,39 +27,35 @@ graphhopper:
   # profiles (see below). Or at least limit the number of `routing.max_visited_nodes`.
 
   profiles:
-   - name: car
-#     turn_costs:
-#       vehicle_types: [motorcar, motor_vehicle]
-#       u_turn_costs: 60
-     custom_model_files: [car.json]
+    - name: bike
+      custom_model_files: [bike.json]
 
-#   You can use the following in-built profiles. After you start GraphHopper it will print which encoded values you'll have to add to graph.encoded_values in this config file.
-#
-#    - name: foot
-#      custom_model_files: [foot.json, foot_elevation.json]
-#
-#    - name: bike
-#      custom_model_files: [bike.json, bike_elevation.json]
-#
-#    - name: racingbike
-#      custom_model_files: [racingbike.json, bike_elevation.json]
-#
-#    - name: mtb
-#      custom_model_files: [mtb.json, bike_elevation.json]
-#
-#    # See the bus.json for more details.
-#    - name: bus
-#       turn_costs:
-#         vehicle_types: [bus, motor_vehicle]
-#         u_turn_costs: 60
-#      custom_model_files: [bus.json]
-#
-#   Other custom models not listed here are: car4wd.json, motorcycle.json, truck.json or cargo-bike.json. You might need to modify and test them before production usage.
-#   See ./core/src/main/resources/com/graphhopper/custom_models and let us know if you customize them, improve them or create new onces!
-#   Also there is the curvature.json custom model which might be useful for a motorcyle profile or the opposite for a truck profile.
-#   Then specify a folder where to find your own custom model files:
-#  custom_models.directory: custom_models
-
+  #   You can use the following in-built profiles. After you start GraphHopper it will print which encoded values you'll have to add to graph.encoded_values in this config file.
+  #
+  #    - name: foot
+  #      custom_model_files: [foot.json, foot_elevation.json]
+  #
+  #    - name: bike
+  #      custom_model_files: [bike.json, bike_elevation.json]
+  #
+  #    - name: racingbike
+  #      custom_model_files: [racingbike.json, bike_elevation.json]
+  #
+  #    - name: mtb
+  #      custom_model_files: [mtb.json, bike_elevation.json]
+  #
+  #    # See the bus.json for more details.
+  #    - name: bus
+  #       turn_costs:
+  #         vehicle_types: [bus, motor_vehicle]
+  #         u_turn_costs: 60
+  #      custom_model_files: [bus.json]
+  #
+  #   Other custom models not listed here are: car4wd.json, motorcycle.json, truck.json or cargo-bike.json. You might need to modify and test them before production usage.
+  #   See ./core/src/main/resources/com/graphhopper/custom_models and let us know if you customize them, improve them or create new onces!
+  #   Also there is the curvature.json custom model which might be useful for a motorcyle profile or the opposite for a truck profile.
+  #   Then specify a folder where to find your own custom model files:
+  #  custom_models.directory: custom_models
 
   # Speed mode:
   # It's possible to speed up routing by doing a special graph preparation (Contraction Hierarchies, CH). This requires
@@ -70,7 +64,7 @@ graphhopper:
   # profiles with `turn_costs: true` a more elaborate preparation is required (longer preparation time and more memory
   # usage) and the routing will also be slower than with `turn_costs: false`.
   profiles_ch:
-    - profile: car
+    - profile: bike
 
   # Hybrid mode:
   # Similar to speed mode, the hybrid mode (Landmarks, LM) also speeds up routing by doing calculating auxiliary data
@@ -83,7 +77,6 @@ graphhopper:
   # for the preparation (`my_other_profile`)
   profiles_lm: []
 
-
   #### Encoded Values ####
 
   # Add additional information to every edge. Used for path details (#1548) and custom models (docs/core/custom-models.md)
@@ -91,7 +84,7 @@ graphhopper:
   # More are: surface,smoothness,max_width,max_height,max_weight,max_weight_except,hgv,max_axle_load,max_length,
   #           hazmat,hazmat_tunnel,hazmat_water,lanes,osm_way_id,toll,track_type,mtb_rating,hike_rating,horse_rating,
   #           country,curvature,average_slope,max_slope,car_temporal_access,bike_temporal_access,foot_temporal_access
-  graph.encoded_values: car_access, car_average_speed
+  graph.encoded_values: surface, bike_priority, bike_access, roundabout, bike_average_speed, average_slope
 
   #### Speed, hybrid and flexible mode ####
 
@@ -105,7 +98,6 @@ graphhopper:
   # Make landmark preparation parallel if you have enough RAM. Change this only if you know what you are doing and if
   # the default worked for you.
   # prepare.lm.threads: 1
-
 
   #### Elevation ####
 
@@ -130,7 +122,6 @@ graphhopper:
   # window size in meter along a way used for averaging a node's elevation
   # graph.elevation.edge_smoothing.moving_average.window_size: 150
 
-
   # To increase elevation profile resolution, use the following two parameters to tune the extra resolution you need
   # against the additional storage space used for edge geometries. You should enable bilinear interpolation when using
   # these features (see #1953 for details).
@@ -140,14 +131,12 @@ graphhopper:
   #   elevation and will remove the extra points that long edge sampling added
   # graph.elevation.way_point_max_distance: 10
 
-
   #### Country-dependent defaults for max speeds ####
 
   # This features sets a maximum speed in 'max_speed' encoded value if no maxspeed tag was found. It is country-dependent
   # and based on several rules. See https://github.com/westnordost/osm-legal-default-speeds
   # To use it uncomment the following, then enable urban density below and add 'country' to graph.encoded_values
   # max_speed_calculator.enabled: true
-
 
   #### Urban density (built-up areas) ####
 
@@ -161,7 +150,6 @@ graphhopper:
   # graph.urban_density.residential_sensitivity: 6000
   # graph.urban_density.city_radius: 1500
   # graph.urban_density.city_sensitivity: 1000
-
 
   #### Subnetworks ####
 
@@ -189,7 +177,6 @@ graphhopper:
   # the given distance in meter. Default is set to 1000km.
   routing.non_ch.max_waypoint_distance: 1000000
 
-
   #### Storage ####
 
   # Excludes certain types of highways during the OSM import to speed up the process and reduce the size of the graph.
@@ -197,8 +184,8 @@ graphhopper:
   # motorized vehicles. This leads to a smaller and less dense graph, because there are fewer ways (obviously),
   # but also because there are fewer crossings between highways (=junctions).
   # Another typical example is excluding 'motorway', 'trunk' and maybe 'primary' highways for bicycle or pedestrian routing.
-  import.osm.ignored_highways: footway,cycleway,path,pedestrian,steps # typically useful for motorized-only routing
-  # import.osm.ignored_highways: motorway,trunk # typically useful for non-motorized routing
+  # import.osm.ignored_highways: footway,cycleway,path,pedestrian,steps # typically useful for motorized-only routing
+  import.osm.ignored_highways: motorway,trunk # typically useful for non-motorized routing
 
   # configure the memory access, use RAM_STORE for well equipped servers (default and recommended)
   graph.dataaccess.default_type: RAM_STORE
@@ -213,7 +200,6 @@ graphhopper:
   # Country borders are included automatically (see countries.geojson).
   # custom_areas.directory: path/to/custom_areas
 
-
   #### Country Rules ####
 
   # GraphHopper applies country-specific routing rules during import (not enabled by default).
@@ -223,18 +209,18 @@ graphhopper:
 # Dropwizard server configuration
 server:
   application_connectors:
-  - type: http
-    port: 8989
-    # for security reasons bind to localhost
-    bind_host: localhost
-    # increase GET request limit - not necessary if /maps UI is not used or used without custom models
-    max_request_header_size: 50k
+    - type: http
+      port: 8989
+      # for security reasons bind to localhost
+      bind_host: localhost
+      # increase GET request limit - not necessary if /maps UI is not used or used without custom models
+      max_request_header_size: 50k
   request_log:
-      appenders: []
+    appenders: []
   admin_connectors:
-  - type: http
-    port: 8990
-    bind_host: localhost
+    - type: http
+      port: 8990
+      bind_host: localhost
 # See https://www.dropwizard.io/en/latest/manual/core.html#logging
 logging:
   appenders:
@@ -257,4 +243,4 @@ logging:
         - type: file
           currentLogFilename: logs/osm_warnings.log
           archive: false
-          logFormat: '[%level] %msg%n'
+          logFormat: "[%level] %msg%n"
