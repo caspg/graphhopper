@@ -13,7 +13,8 @@ import static com.graphhopper.routing.util.parsers.OSMTemporalAccessParser.hasTe
 
 public abstract class BikeCommonAccessParser extends AbstractAccessParser implements TagParser {
 
-    private static final Set<String> OPP_LANES = new HashSet<>(Arrays.asList("opposite", "opposite_lane", "opposite_track"));
+    private static final Set<String> OPP_LANES = new HashSet<>(
+            Arrays.asList("opposite", "opposite_lane", "opposite_track"));
     private final Set<String> allowedHighways = new HashSet<>();
     private final BooleanEncodedValue roundaboutEnc;
 
@@ -35,7 +36,7 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
 
         allowedHighways.addAll(Arrays.asList("living_street", "steps", "cycleway", "path", "footway", "platform",
                 "pedestrian", "track", "service", "residential", "unclassified", "road", "bridleway",
-                "motorway", "motorway_link", "trunk", "trunk_link",
+                "motorway", "motorway_link", "trunk", "trunk_link", "construction",
                 "primary", "primary_link", "secondary", "secondary_link", "tertiary", "tertiary_link"));
     }
 
@@ -45,7 +46,8 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
             WayAccess access = WayAccess.CAN_SKIP;
 
             if (FerrySpeedCalculator.isFerry(way)) {
-                // if bike is NOT explicitly tagged allow bike but only if foot is not specified either
+                // if bike is NOT explicitly tagged allow bike but only if foot is not specified
+                // either
                 String bikeTag = way.getTag("bicycle");
                 if (bikeTag == null && !way.hasTag("foot") || intendedValues.contains(bikeTag))
                     access = WayAccess.FERRY;
@@ -106,7 +108,8 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
     }
 
     boolean isSacScaleAllowed(String sacScale) {
-        // other scales are nearly impossible by an ordinary bike, see http://wiki.openstreetmap.org/wiki/Key:sac_scale
+        // other scales are nearly impossible by an ordinary bike, see
+        // http://wiki.openstreetmap.org/wiki/Key:sac_scale
         return "hiking".equals(sacScale);
     }
 
@@ -130,9 +133,13 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
     }
 
     protected void handleAccess(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way) {
-        // handle oneways. The value -1 means it is a oneway but for reverse direction of stored geometry.
-        // The tagging oneway:bicycle=no or cycleway:right:oneway=no or cycleway:left:oneway=no lifts the generic oneway restriction of the way for bike
-        boolean isOneway = way.hasTag("oneway", ONEWAYS) && !way.hasTag("oneway", "-1") && !way.hasTag("bicycle:backward", INTENDED)
+        // handle oneways. The value -1 means it is a oneway but for reverse direction
+        // of stored geometry.
+        // The tagging oneway:bicycle=no or cycleway:right:oneway=no or
+        // cycleway:left:oneway=no lifts the generic oneway restriction of the way for
+        // bike
+        boolean isOneway = way.hasTag("oneway", ONEWAYS) && !way.hasTag("oneway", "-1")
+                && !way.hasTag("bicycle:backward", INTENDED)
                 || way.hasTag("oneway", "-1") && !way.hasTag("bicycle:forward", INTENDED)
                 || way.hasTag("oneway:bicycle", ONEWAYS)
                 || way.hasTag("cycleway:left:oneway", ONEWAYS)
