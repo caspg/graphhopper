@@ -3,7 +3,7 @@ set -e
 
 pbf_file="europe-latest.osm.pbf"
 
-if [ ! -e "$file" ]; then
+if [ ! -e "$pbf_file" ]; then
     echo "File does not exist. Downloading..."
     wget https://download.geofabrik.de/europe-latest.osm.pbf
 fi
