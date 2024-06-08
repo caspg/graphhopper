@@ -1,5 +1,13 @@
+function getRoutingApi() {
+    if (location.pathname.startsWith("/graphhopper")) {
+        return location.origin + '/graphhopper/'
+    }
+
+    return location.origin + '/'
+}
+
 const config = {
-    routingApi: location.origin + '/',
+    routingApi: getRoutingApi(),
     geocodingApi: '',
     defaultTiles: 'OpenStreetMap',
     keys: {

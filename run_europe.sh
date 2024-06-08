@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-file="europe-latest.osm.pbf"
-# wget https://download.geofabrik.de/europe-latest.osm.pbf
+pbf_file="europe-latest.osm.pbf"
 
-java -Xmx32g -Xms32g -Ddw.graphhopper.datareader.file=europe-latest.osm.pbf -jar web/target/graphhopper-web-*.jar server config-example.yml 2>&1 | tee logs.txt
+if [ ! -e "$file" ]; then
+    echo "File does not exist. Downloading..."
+    wget https://download.geofabrik.de/europe-latest.osm.pbf
+fi
+
+java -Xmx32g -Xms32g -Ddw.graphhopper.datareader.file=$pbf_file -jar web/target/graphhopper-web-*.jar server config-example.yml 2>&1 | tee logs.txt
