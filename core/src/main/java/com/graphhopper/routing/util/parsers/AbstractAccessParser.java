@@ -57,7 +57,8 @@ public abstract class AbstractAccessParser implements TagParser {
     }
 
     protected void handleBarrierEdge(int edgeId, EdgeIntAccess edgeIntAccess, Map<String, Object> nodeTags) {
-        // for now we just create a dummy reader node, because our encoders do not make use of the coordinates anyway
+        // for now we just create a dummy reader node, because our encoders do not make
+        // use of the coordinates anyway
         ReaderNode readerNode = new ReaderNode(0, 0, 0, nodeTags);
         // block access for barriers
         if (isBarrier(readerNode)) {
@@ -75,12 +76,14 @@ public abstract class AbstractAccessParser implements TagParser {
     public abstract void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way);
 
     /**
-     * @return true if the given OSM node blocks access for the specified restrictions, false otherwise
+     * @return true if the given OSM node blocks access for the specified
+     *         restrictions, false otherwise
      */
     public boolean isBarrier(ReaderNode node) {
-        // note that this method will be only called for certain nodes as defined by OSMReader!
+        // note that this method will be only called for certain nodes as defined by
+        // OSMReader!
         String firstValue = node.getFirstValue(restrictionKeys);
-        if (restrictedValues.contains(firstValue) || node.hasTag("locked", "yes"))
+        if (restrictedValues.contains(firstValue))
             return true;
         else if (intendedValues.contains(firstValue))
             return false;
