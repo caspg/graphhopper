@@ -4,11 +4,11 @@ set -e
 # Run below command if there was any change in the source:
 # mvn clean install -DskipTests
 
-pbf_file="europe-latest.osm.pbf"
+pbf_file="poland-latest.osm.pbf"
 
 if [ ! -e "$pbf_file" ]; then
     echo "File does not exist. Downloading..."
-    wget https://download.geofabrik.de/europe-latest.osm.pbf
+    wget https://download.geofabrik.de/europe/poland-latest.osm.pbf
 fi
 
 # its for reverse proxy that is is setup by Docker
