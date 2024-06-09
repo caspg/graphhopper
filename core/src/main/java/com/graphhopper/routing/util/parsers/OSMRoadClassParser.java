@@ -24,6 +24,7 @@ import com.graphhopper.routing.ev.RoadClass;
 import com.graphhopper.storage.IntsRef;
 
 import static com.graphhopper.routing.ev.RoadClass.OTHER;
+import static com.graphhopper.routing.ev.RoadClass.CYCLEWAY;
 
 public class OSMRoadClassParser implements TagParser {
 
@@ -35,10 +36,23 @@ public class OSMRoadClassParser implements TagParser {
 
     @Override
     public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay readerWay, IntsRef relationFlags) {
+        Boolean hasCyclewayTag = readerWay.hasTag("cycleway") || readerWay.hasTag("cycleway:right")
+                || readerWay.hasTag("cycleway:left") || readerWay.hasTag("cycleway:both");
+
         String roadClassTag = readerWay.getTag("highway");
+
+        Boolean isBicycleDesignated = readerWay.hasTag("bicycle", "designated");
+
         if (roadClassTag == null)
             return;
+
+        if (hasCyclewayTag || isBicycleDesignated) {
+            roadClassEnc.setEnum(false, edgeId, edgeIntAccess, CYCLEWAY);
+            return;
+        }
+
         RoadClass roadClass = RoadClass.find(roadClassTag);
+
         if (roadClass == OTHER && roadClassTag.endsWith("_link"))
             roadClass = RoadClass.find(roadClassTag.substring(0, roadClassTag.length() - 5));
 
