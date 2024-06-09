@@ -21,7 +21,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Used to store a priority value in the way flags of an edge. Used in combination with
+ * Used to store a priority value in the way flags of an edge. Used in
+ * combination with
  * PriorityWeighting
  *
  * @author Peter Karich

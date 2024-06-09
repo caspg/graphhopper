@@ -17,7 +17,8 @@ public abstract class BikeCommonAverageSpeedParser extends AbstractAverageSpeedP
 
     protected static final int PUSHING_SECTION_SPEED = 4;
     protected static final int MIN_SPEED = 2;
-    // Pushing section highways are parts where you need to get off your bike and push it (German: Schiebestrecke)
+    // Pushing section highways are parts where you need to get off your bike and
+    // push it (German: Schiebestrecke)
     protected final HashSet<String> pushingSectionsHighways = new HashSet<>();
     private final Map<String, Integer> trackTypeSpeeds = new HashMap<>();
     private final Map<String, Integer> surfaceSpeeds = new HashMap<>();
@@ -26,7 +27,8 @@ public abstract class BikeCommonAverageSpeedParser extends AbstractAverageSpeedP
     private final EnumEncodedValue<Smoothness> smoothnessEnc;
     protected final Set<String> intendedValues = new HashSet<>(5);
 
-    protected BikeCommonAverageSpeedParser(DecimalEncodedValue speedEnc, EnumEncodedValue<Smoothness> smoothnessEnc, DecimalEncodedValue ferrySpeedEnc) {
+    protected BikeCommonAverageSpeedParser(DecimalEncodedValue speedEnc, EnumEncodedValue<Smoothness> smoothnessEnc,
+            DecimalEncodedValue ferrySpeedEnc) {
         super(speedEnc, ferrySpeedEnc);
         this.smoothnessEnc = smoothnessEnc;
 
@@ -134,7 +136,8 @@ public abstract class BikeCommonAverageSpeedParser extends AbstractAverageSpeedP
         String highwayValue = way.getTag("highway");
         if (highwayValue == null) {
             if (FerrySpeedCalculator.isFerry(way)) {
-                double ferrySpeed = FerrySpeedCalculator.minmax(ferrySpeedEnc.getDecimal(false, edgeId, edgeIntAccess), avgSpeedEnc);
+                double ferrySpeed = FerrySpeedCalculator.minmax(ferrySpeedEnc.getDecimal(false, edgeId, edgeIntAccess),
+                        avgSpeedEnc);
                 setSpeed(false, edgeId, edgeIntAccess, ferrySpeed);
                 if (avgSpeedEnc.isStoreTwoDirections())
                     setSpeed(true, edgeId, edgeIntAccess, ferrySpeed);
@@ -158,10 +161,11 @@ public abstract class BikeCommonAverageSpeedParser extends AbstractAverageSpeedP
 
         if (way.hasTag("railway", "platform"))
             highwaySpeed = PUSHING_SECTION_SPEED;
-            // Under certain conditions we need to increase the speed of pushing sections to the speed of a "highway=cycleway"
+        // Under certain conditions we need to increase the speed of pushing sections to
+        // the speed of a "highway=cycleway"
         else if (way.hasTag("highway", pushingSectionsHighways)
                 && ((way.hasTag("foot", "yes") && way.hasTag("segregated", "yes"))
-                || (way.hasTag("bicycle", intendedValues)) && !way.hasTag("highway", "steps")))
+                        || (way.hasTag("bicycle", intendedValues)) && !way.hasTag("highway", "steps")))
             highwaySpeed = getHighwaySpeed("cycleway");
 
         String s = way.getTag("surface");
@@ -189,19 +193,26 @@ public abstract class BikeCommonAverageSpeedParser extends AbstractAverageSpeedP
         }
 
         // Until now we assumed that the way is no pushing section
-        // Now we check that, but only in case that our speed computed so far is bigger compared to the PUSHING_SECTION_SPEED
+        // Now we check that, but only in case that our speed computed so far is bigger
+        // compared to the PUSHING_SECTION_SPEED
         if (speed > PUSHING_SECTION_SPEED
                 && (way.hasTag("highway", pushingSectionsHighways) || way.hasTag("bicycle", "dismount"))) {
             if (!way.hasTag("bicycle", intendedValues)) {
-                // Here we set the speed for pushing sections and set speed for steps as even lower:
+                // Here we set the speed for pushing sections and set speed for steps as even
+                // lower:
                 speed = way.hasTag("highway", "steps") ? MIN_SPEED : PUSHING_SECTION_SPEED;
             } else if (way.hasTag("bicycle", "designated") || way.hasTag("bicycle", "official") ||
                     way.hasTag("segregated", "yes") || way.hasTag("bicycle", "yes")) {
-                // Here we handle the cases where the OSM tagging results in something similar to "highway=cycleway"
+                // Here we handle the cases where the OSM tagging results in something similar
+                // to "highway=cycleway"
                 if (way.hasTag("segregated", "yes"))
                     speed = highwaySpeeds.get("cycleway");
                 else
-                    speed = way.hasTag("bicycle", "yes") ? 10 : highwaySpeeds.get("cycleway");
+                    // If we set 10, this footway with allowed bicle is not preffered
+                    // and it leads to strange routes.
+                    //
+                    // speed = way.hasTag("bicycle", "yes") ? 10 : highwaySpeeds.get("cycleway");
+                    speed = highwaySpeeds.get("cycleway");
 
                 // valid surface speed?
                 if (surfaceSpeed > 0)
