@@ -21,9 +21,8 @@ const config = {
     request: {
         details: [
             'road_class',
-            'road_environment',
-            'max_speed',
-            'average_speed',
+            'surface',
+            'bike_network'
         ],
         snapPreventions: ['ferry'],
     },
