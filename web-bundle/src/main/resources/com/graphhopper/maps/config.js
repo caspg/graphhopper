@@ -1,5 +1,13 @@
+function getRoutingApi() {
+    if (location.origin.includes('services.velomapa.pl')) {
+        return location.origin + '/graphhopper/'
+    }
+
+    return location.origin + '/'
+}
+
 const config = {
-    routingApi: location.origin + '/',
+    routingApi: getRoutingApi(),
     geocodingApi: '',
     defaultTiles: 'OpenStreetMap',
     keys: {
