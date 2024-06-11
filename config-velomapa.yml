@@ -28,7 +28,18 @@ graphhopper:
 
   profiles:
     - name: bike
-      custom_model_files: [bike.json, bike_elevation.json]
+      custom_model_files: [bike.json]
+
+    # Favours official cycling networks.
+    - name: bike_touring
+      custom_model_files: [bike_touring.json]
+
+    # This profile is used to map match official cycling routes
+    # that are presented in the velomapa website.
+    # They may lead throud roads under construction.
+    - name: bike_velomapa_map_matching
+      custom_model_files: [bike_velomapa_map_matching.json]
+
 
   #   You can use the following in-built profiles. After you start GraphHopper it will print which encoded values you'll have to add to graph.encoded_values in this config file.
   #
@@ -65,6 +76,8 @@ graphhopper:
   # usage) and the routing will also be slower than with `turn_costs: false`.
   profiles_ch:
     - profile: bike
+    - profile: bike_touring
+    - profile: velomapa_map_matching
 
   # Hybrid mode:
   # Similar to speed mode, the hybrid mode (Landmarks, LM) also speeds up routing by doing calculating auxiliary data
@@ -84,7 +97,7 @@ graphhopper:
   # More are: surface,smoothness,max_width,max_height,max_weight,max_weight_except,hgv,max_axle_load,max_length,
   #           hazmat,hazmat_tunnel,hazmat_water,lanes,osm_way_id,toll,track_type,mtb_rating,hike_rating,horse_rating,
   #           country,curvature,average_slope,max_slope,car_temporal_access,bike_temporal_access,foot_temporal_access
-  graph.encoded_values: surface, bike_priority, bike_access, roundabout, bike_average_speed, average_slope, road_class
+  graph.encoded_values: surface, bike_priority, bike_access, roundabout, bike_average_speed, average_slope, road_class, bike_network
 
   #### Speed, hybrid and flexible mode ####
 
@@ -185,7 +198,7 @@ graphhopper:
   # but also because there are fewer crossings between highways (=junctions).
   # Another typical example is excluding 'motorway', 'trunk' and maybe 'primary' highways for bicycle or pedestrian routing.
   # import.osm.ignored_highways: footway,cycleway,path,pedestrian,steps # typically useful for motorized-only routing
-  import.osm.ignored_highways: motorway,trunk # typically useful for non-motorized routing
+  import.osm.ignored_highways: motorway,trunk,motorway_link,trunk_link # typically useful for non-motorized routing
 
   # configure the memory access, use RAM_STORE for well equipped servers (default and recommended)
   graph.dataaccess.default_type: RAM_STORE
