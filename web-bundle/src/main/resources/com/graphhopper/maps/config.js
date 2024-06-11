@@ -1,5 +1,5 @@
 function getRoutingApi() {
-    if (location.origin.includes('services.velomapa.pl')) {
+    if (location.pathname.includes('graphhopper'))  {
         return location.origin + '/graphhopper/'
     }
 
