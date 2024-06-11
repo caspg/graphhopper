@@ -41,10 +41,14 @@ public class OSMRoadClassParser implements TagParser {
         Boolean hasCyclewayTag = readerWay.hasTag("cycleway") || readerWay.hasTag("cycleway:right")
                 || readerWay.hasTag("cycleway:left") || readerWay.hasTag("cycleway:both");
 
+        // `cycleway=opposite` isn't a dedicated bike infra,
+        // just allowed to cycle in the opposite direction on a one-way street
+        Boolean isCyclewayOpposite = readerWay.hasTag("cycleway", "opposite");
+
         if (roadClassTag == null)
             return;
 
-        if (hasCyclewayTag || isBicycleDesignated) {
+        if ((hasCyclewayTag && !isCyclewayOpposite) || isBicycleDesignated) {
             roadClassEnc.setEnum(false, edgeId, edgeIntAccess, CYCLEWAY);
             return;
         }
