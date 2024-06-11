@@ -1,5 +1,5 @@
 function getRoutingApi() {
-    if (location.pathname.includes('graphhopper'))  {
+    if (location.pathname.includes('/graphhopper'))  {
         return location.origin + '/graphhopper/'
     }
 
