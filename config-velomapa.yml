@@ -77,7 +77,7 @@ graphhopper:
   profiles_ch:
     - profile: bike
     - profile: bike_touring
-    - profile: velomapa_map_matching
+    - profile: bike_velomapa_map_matching
 
   # Hybrid mode:
   # Similar to speed mode, the hybrid mode (Landmarks, LM) also speeds up routing by doing calculating auxiliary data

@@ -20,6 +20,30 @@ mvn clean install -DskipTests \
   && java -Xmx8g -Xms8g -Ddw.graphhopper.datareader.file=pomorskie-latest.osm.pbf -jar web/target/graphhopper-web-*.jar server config-velomapa.yml
 ```
 
+## Dockerfile
+
+Docker setup based on [IsraelHikingMap/graphhopper-docker-image-push](https://github.com/IsraelHikingMap/graphhopper-docker-image-push)
+For example it can be run as:
+
+```bash
+docker build --no-cache --tag 'caspg_gh' .
+
+# print all options
+docker run caspg_gh --help
+
+# run with local OSM file which is located inside `./gh-data`
+docker run -v ./gh-data:/data -p 8989:8989 caspg_gh --input /data/gdansk.pbf --host 0.0.0.0
+
+# this will download OSM data
+docker run -v ./gh-data:/data -p 8989:8989 caspg_gh --url https://download.geofabrik.de/europe/andorra-latest.osm.pbf --host 0.0.0.0
+```
+
+Removing GH cache:
+
+```bash
+rm -rf ./gh-data/graph-cache
+```
+
 ---
 
 GraphHopper is a fast and memory-efficient routing engine released under Apache License 2.0.
