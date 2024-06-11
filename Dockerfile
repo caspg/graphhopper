@@ -12,7 +12,8 @@ RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:21.0.1_12-jre
 
-ENV JAVA_OPTS "-Xmx1g -Xms1g"
+ARG JAVA_OPTS "-Xmx1g -Xms1g"
+ENV JAVA_OPTS $JAVA_OPTS
 
 WORKDIR /graphhopper
 

@@ -60,13 +60,13 @@ done
 
 # Defaults
 : "${ACTION:=server}"
-: "${GRAPH:=/data/graph-cache}"
+: "${GRAPH:=/data/default-gh}"
 : "${CONFIG:=config-example.yml}"
 : "${JAVA_OPTS:=-Xmx1g -Xms1g}"
 : "${JAR:=$(find . -type f -name "*.jar")}"
 
 if [ "$URL" != "" ]; then
-  wget -S -nv -O "${FILE:=/data/data.pbf}" "$URL"
+  wget -S -nv -O "${FILE:=data.pbf}" "$URL"
 fi
 
 # create the directories if needed
