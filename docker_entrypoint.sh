@@ -60,7 +60,7 @@ done
 
 # Defaults
 : "${ACTION:=server}"
-: "${GRAPH:=/data/default-gh}"
+: "${GRAPH:=/data/graph-cache}"
 : "${CONFIG:=config-example.yml}"
 : "${JAVA_OPTS:=-Xmx1g -Xms1g}"
 : "${JAR:=$(find . -type f -name "*.jar")}"
