@@ -23,7 +23,12 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
         this.roundaboutEnc = roundaboutEnc;
 
         restrictedValues.add("agricultural");
-        restrictedValues.add("forestry");
+
+        // Note(Kacper):
+        // In Poland all forestry roads are accessible by bike.
+        // Not sure about other countries but Komoot allows to plan routes on forestry roads.
+        // restrictedValues.add("forestry");
+
         restrictedValues.add("delivery");
 
         intendedValues.add("yes");
