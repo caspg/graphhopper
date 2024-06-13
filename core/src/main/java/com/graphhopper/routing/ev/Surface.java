@@ -20,7 +20,9 @@ package com.graphhopper.routing.ev;
 import com.graphhopper.util.Helper;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This enum defines the road surface of an edge like unpaved or asphalt. If not tagged the value will be MISSING, which
@@ -30,13 +32,14 @@ import java.util.Map;
 public enum Surface {
     // Order is important to make ordinal roughly comparable
     MISSING,
-    PAVED, ASPHALT, CONCRETE, PAVING_STONES, COBBLESTONE,
+    PAVED, ASPHALT, CONCRETE, CONCRETE_LANES, CONCRETE_PLATES, PAVING_STONES, COBBLESTONE,
     UNPAVED, COMPACTED, FINE_GRAVEL, GRAVEL, GROUND, DIRT, GRASS, SAND, WOOD,
     OTHER;
 
     public static final String KEY = "surface";
 
     private static final Map<String, Surface> SURFACE_MAP = new HashMap<>();
+    private static final Set<String> allowedSubcategories = new HashSet<>();
 
     static {
         for (Surface surface : values()) {
@@ -50,6 +53,11 @@ public enum Surface {
         SURFACE_MAP.put("earth", DIRT);
         SURFACE_MAP.put("pebblestone", GRAVEL);
         SURFACE_MAP.put("grass_paver", GRASS);
+        SURFACE_MAP.put("concrete:plates", CONCRETE_PLATES);
+        SURFACE_MAP.put("concrete:lanes", CONCRETE_LANES);
+
+        allowedSubcategories.add("concrete:plates");
+        allowedSubcategories.add("concrete:lanes");
     }
 
     public static EnumEncodedValue<Surface> create() {
@@ -66,7 +74,8 @@ public enum Surface {
             return MISSING;
 
         int colonIndex = name.indexOf(":");
-        if (colonIndex != -1) {
+
+        if (colonIndex != -1 && !allowedSubcategories.contains(name)) {
             name = name.substring(0, colonIndex);
         }
 
