@@ -22,7 +22,11 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
 
         this.roundaboutEnc = roundaboutEnc;
 
-        restrictedValues.add("agricultural");
+        // Note(Kacper):
+        // Not every element has needed bicycle=yes tag which breaks cycling routes tracks.
+        // Komoot and Mapy.cz also allow to plan routes on agricultural roads.
+        //
+        // restrictedValues.add("agricultural");
 
         // Note(Kacper):
         // In Poland all forestry roads are accessible by bike.
