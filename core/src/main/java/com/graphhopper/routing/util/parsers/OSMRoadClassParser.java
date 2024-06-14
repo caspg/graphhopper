@@ -38,8 +38,7 @@ public class OSMRoadClassParser implements TagParser {
     public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay readerWay, IntsRef relationFlags) {
         String roadClassTag = readerWay.getTag("highway");
         Boolean isBicycleDesignated = readerWay.hasTag("bicycle", "designated");
-        Boolean hasCyclewayTag = readerWay.hasTag("cycleway") || readerWay.hasTag("cycleway:right")
-                || readerWay.hasTag("cycleway:left") || readerWay.hasTag("cycleway:both");
+        String cyclewayTag = getCyclewayTag(readerWay);
 
         // `cycleway=opposite` isn't a dedicated bike infra,
         // just allowed to cycle in the opposite direction on a one-way street
@@ -48,7 +47,7 @@ public class OSMRoadClassParser implements TagParser {
         if (roadClassTag == null)
             return;
 
-        if ((hasCyclewayTag && !isCyclewayOpposite) || isBicycleDesignated) {
+        if ((!cyclewayTag.isBlank() && !cyclewayTag.equals("no") && !isCyclewayOpposite) || isBicycleDesignated) {
             roadClassEnc.setEnum(false, edgeId, edgeIntAccess, CYCLEWAY);
             return;
         }
@@ -60,5 +59,17 @@ public class OSMRoadClassParser implements TagParser {
 
         if (roadClass != OTHER)
             roadClassEnc.setEnum(false, edgeId, edgeIntAccess, roadClass);
+    }
+
+    private String getCyclewayTag(ReaderWay readerWay) {
+        if (readerWay.hasTag("cycleway"))
+            return readerWay.getTag("cycleway");
+        if (readerWay.hasTag("cycleway:right"))
+            return readerWay.getTag("cycleway:right");
+        if (readerWay.hasTag("cycleway:left"))
+            return readerWay.getTag("cycleway:left");
+        if (readerWay.hasTag("cycleway:both"))
+            return readerWay.getTag("cycleway:both");
+        return "";
     }
 }
