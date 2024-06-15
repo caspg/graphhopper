@@ -36,9 +36,17 @@ public class OSMSurfaceParser implements TagParser {
     @Override
     public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay readerWay, IntsRef relationFlags) {
         String surfaceTag = readerWay.getTag("surface");
+        String cyclewaySurfaceTag = readerWay.getTag("cycleway:surface");
+
         Surface surface = Surface.find(surfaceTag);
+        Surface cyclewaySurface = Surface.find(cyclewaySurfaceTag);
+
         if (surface == MISSING)
             return;
+
+        if (cyclewaySurface != MISSING) {
+            surface = cyclewaySurface;
+        }
 
         surfaceEnc.setEnum(false, edgeId, edgeIntAccess, surface);
     }
