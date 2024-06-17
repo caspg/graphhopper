@@ -3,6 +3,8 @@ package com.graphhopper.routing.util.parsers;
 import com.graphhopper.reader.ReaderWay;
 import com.graphhopper.routing.ev.BooleanEncodedValue;
 import com.graphhopper.routing.ev.EdgeIntAccess;
+import com.graphhopper.routing.ev.EnumEncodedValue;
+import com.graphhopper.routing.ev.RouteNetwork;
 import com.graphhopper.routing.util.FerrySpeedCalculator;
 import com.graphhopper.routing.util.TransportationMode;
 import com.graphhopper.routing.util.WayAccess;
@@ -16,11 +18,13 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
     private static final Set<String> OPP_LANES = new HashSet<>(Arrays.asList("opposite", "opposite_lane", "opposite_track"));
     private final Set<String> allowedHighways = new HashSet<>();
     private final BooleanEncodedValue roundaboutEnc;
+    private final EnumEncodedValue<RouteNetwork> bikeNetworkEnc;
 
-    protected BikeCommonAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedValue roundaboutEnc) {
+protected BikeCommonAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedValue roundaboutEnc, EnumEncodedValue<RouteNetwork> bikeNetworkEnc) {
         super(accessEnc, TransportationMode.BIKE);
 
         this.roundaboutEnc = roundaboutEnc;
+        this.bikeNetworkEnc = bikeNetworkEnc;
 
         // Note(Kacper):
         // Not every element has needed bicycle=yes tag which breaks cycling routes tracks.
@@ -48,7 +52,12 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
                 "primary", "primary_link", "secondary", "secondary_link", "tertiary", "tertiary_link"));
     }
 
+    // This is method is just to make tests compile.
     public WayAccess getAccess(ReaderWay way) {
+        return this.getAccess(way, RouteNetwork.MISSING);
+    }
+
+    public WayAccess getAccess(ReaderWay way, RouteNetwork routeNetwork) {
         String highwayValue = way.getTag("highway");
         if (highwayValue == null) {
             WayAccess access = WayAccess.CAN_SKIP;
@@ -94,8 +103,14 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
             String firstValue = way.getTag(restrictionKeys.get(firstIndex), "");
             String[] restrict = firstValue.split(";");
             for (String value : restrict) {
-                if (restrictedValues.contains(value) && !hasTemporalRestriction(way, firstIndex, restrictionKeys))
+                if (restrictedValues.contains(value) && !hasTemporalRestriction(way, firstIndex, restrictionKeys)) {
+                    // if access is restricted but there is a bike network, then use the way
+                    if (routeNetwork != RouteNetwork.MISSING) {
+                        return WayAccess.WAY;
+                    }
+
                     return WayAccess.CAN_SKIP;
+                }
                 if (intendedValues.contains(value))
                     return WayAccess.WAY;
             }
@@ -121,7 +136,9 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
 
     @Override
     public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way) {
-        WayAccess access = getAccess(way);
+        RouteNetwork bikeNetork = this.bikeNetworkEnc.getEnum(false, edgeId, edgeIntAccess);
+
+        WayAccess access = getAccess(way, bikeNetork);
         if (access.canSkip())
             return;
 
