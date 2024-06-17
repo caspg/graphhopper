@@ -22,6 +22,7 @@ const config = {
         details: [
             'road_class',
             'surface',
+            'bike_network',
             'bike_network'
         ],
         snapPreventions: ['ferry'],
