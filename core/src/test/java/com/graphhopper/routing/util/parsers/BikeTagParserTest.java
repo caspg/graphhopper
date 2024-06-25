@@ -163,6 +163,18 @@ public class BikeTagParserTest extends AbstractBikeTagParserTester {
         assertPriorityAndSpeed(PREFER, 18, way);
 
         way.clearTags();
+        way.setTag("highway", "track");
+        way.setTag("bicycle", "designated");
+        way.setTag("segregated","no");
+        assertPriorityAndSpeed(PREFER, 12, way);
+        way.setTag("surface", "asphalt");
+        assertPriorityAndSpeed(VERY_NICE, cyclewaySpeed, way);
+        way.setTag("tracktype","grade1");
+        assertPriorityAndSpeed(VERY_NICE, cyclewaySpeed, way);
+        way.removeTag("surface");
+        assertPriorityAndSpeed(VERY_NICE, cyclewaySpeed, way);
+
+        way.clearTags();
         way.setTag("highway", "path");
         assertPriorityAndSpeed(SLIGHT_AVOID, PUSHING_SECTION_SPEED, way);
 
@@ -234,6 +246,8 @@ public class BikeTagParserTest extends AbstractBikeTagParserTester {
 
         way.clearTags();
         way.setTag("highway", "track");
+        assertPriorityAndSpeed(UNCHANGED, 12, way);
+
         way.setTag("surface", "paved");
         assertPriorityAndSpeed(UNCHANGED, 18, way);
 
@@ -291,7 +305,6 @@ public class BikeTagParserTest extends AbstractBikeTagParserTester {
         assertPriorityAndSpeed(VERY_NICE, PUSHING_SECTION_SPEED, way);
         way.setTag("bicycle", "yes");
         assertPriorityAndSpeed(VERY_NICE, 18, way);
-
     }
 
     @Test
@@ -677,4 +690,21 @@ public class BikeTagParserTest extends AbstractBikeTagParserTester {
         assertTrue(accessEnc.getBool(false, edgeId, access));
     }
 
+    @Test
+    public void testPedestrian() {
+        ReaderWay way = new ReaderWay(1);
+        way.setTag("highway", "pedestrian");
+        assertPriorityAndSpeed(SLIGHT_AVOID, 4, way);
+        way.setTag("bicycle", "yes");
+        assertPriorityAndSpeed(PREFER, 12, way);
+        way.setTag("surface", "asphalt");
+        assertPriorityAndSpeed(PREFER, 12, way);
+
+        way.clearTags();
+        way.setTag("highway", "pedestrian");
+        way.setTag("cycleway:right", "track");
+        assertPriorityAndSpeed(PREFER, 18, way);
+        way.setTag("bicycle", "yes");
+        assertPriorityAndSpeed(PREFER, 18, way);
+    }
 }
