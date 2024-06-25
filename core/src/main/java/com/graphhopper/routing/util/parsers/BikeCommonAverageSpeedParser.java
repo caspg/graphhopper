@@ -68,7 +68,10 @@ public abstract class BikeCommonAverageSpeedParser extends AbstractAverageSpeedP
         setSurfaceSpeed("sand", PUSHING_SECTION_SPEED);
         setSurfaceSpeed("wood", PUSHING_SECTION_SPEED);
 
-        setHighwaySpeed("living_street", PUSHING_SECTION_SPEED);
+        // Living street speed should be increased.
+        // In some countries (Germany, Austria) it only allow for "walking" speed
+        // but initial 4km/h caused problems in routing in countries with higher speed limits
+        setHighwaySpeed("living_street", 6);
         setHighwaySpeed("steps", MIN_SPEED);
 
         setHighwaySpeed("cycleway", 18);
