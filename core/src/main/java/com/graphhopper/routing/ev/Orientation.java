@@ -15,21 +15,14 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package com.graphhopper.routing.ev;
 
-package com.graphhopper.routing.util.countryrules.europe;
+public class Orientation {
+    public static final String KEY = "orientation";
 
-import com.graphhopper.reader.ReaderWay;
-import com.graphhopper.routing.ev.Toll;
-import com.graphhopper.routing.util.countryrules.CountryRule;
-
-public class LiechtensteinCountryRule implements CountryRule {
-
-    @Override
-    public Toll getToll(ReaderWay readerWay, Toll currentToll) {
-        if (currentToll != Toll.MISSING) {
-            return currentToll;
-        }
-
-        return Toll.HGV;
+    // Due to pillar nodes we need 2 values: the orientation at the adjacent node and the reverse
+    // value for orientation at the base node. Store in degrees.
+    public static DecimalEncodedValue create() {
+        return new DecimalEncodedValueImpl(KEY, 5, 0, 360 / 30.0, false, true, false);
     }
 }
