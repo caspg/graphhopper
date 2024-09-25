@@ -16,30 +16,24 @@
  *  limitations under the License.
  */
 
-package com.graphhopper.http;
+package com.graphhopper.util;
 
-import io.dropwizard.jersey.params.AbstractParam;
+import com.fasterxml.jackson.databind.JsonNode;
 
-import java.time.OffsetDateTime;
+public class BodyAndStatus {
+    private final JsonNode body;
+    private final int status;
 
-public class OffsetDateTimeParam extends AbstractParam<OffsetDateTime> {
-    public OffsetDateTimeParam(String input) {
-        super(input);
+    public BodyAndStatus(JsonNode body, int status) {
+        this.body = body;
+        this.status = status;
     }
 
-    public OffsetDateTimeParam(String input, String parameterName) {
-        super(input, parameterName);
+    public JsonNode getBody() {
+        return body;
     }
 
-    @Override
-    protected String errorMessage(Exception e) {
-        return "%s must be in a ISO-8601 format.";
-    }
-
-    @Override
-    protected OffsetDateTime parse(String input) {
-        if (input == null)
-            return null;
-        return OffsetDateTime.parse(input);
+    public int getStatus() {
+        return status;
     }
 }
