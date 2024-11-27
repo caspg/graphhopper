@@ -37,8 +37,8 @@ graphhopper:
     # This profile is used to map match official cycling routes
     # that are presented in the velomapa website.
     # They may lead throud roads under construction.
-    - name: bike_velomapa_map_matching
-      custom_model_files: [bike_velomapa_map_matching.json]
+    # - name: bike_velomapa_map_matching
+    #   custom_model_files: [bike_velomapa_map_matching.json]
 
 
   #   You can use the following in-built profiles. After you start GraphHopper it will print which encoded values you'll have to add to graph.encoded_values in this config file.
@@ -74,10 +74,10 @@ graphhopper:
   # list you can define for which of the above routing profiles such preparation shall be performed. Note that to support
   # profiles with `turn_costs: true` a more elaborate preparation is required (longer preparation time and more memory
   # usage) and the routing will also be slower than with `turn_costs: false`.
-  profiles_ch:
-    - profile: bike
-    - profile: bike_touring
-    - profile: bike_velomapa_map_matching
+  profiles_ch: []
+    # - profile: bike
+    # - profile: bike_touring
+    # - profile: bike_velomapa_map_matching
 
   # Hybrid mode:
   # Similar to speed mode, the hybrid mode (Landmarks, LM) also speeds up routing by doing calculating auxiliary data
