@@ -52,7 +52,7 @@ public enum Surface {
         SURFACE_MAP.put("unhewn_cobblestone", COBBLESTONE);
         SURFACE_MAP.put("earth", DIRT);
         SURFACE_MAP.put("pebblestone", GRAVEL);
-        SURFACE_MAP.put("grass_paver", GRASS);
+        SURFACE_MAP.put("grass_paver", CONCRETE_PLATES);
         SURFACE_MAP.put("concrete:plates", CONCRETE_PLATES);
         SURFACE_MAP.put("concrete:lanes", CONCRETE_LANES);
 
