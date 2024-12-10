@@ -6,7 +6,6 @@ import com.graphhopper.routing.ev.EdgeIntAccess;
 import com.graphhopper.routing.ev.EnumEncodedValue;
 import com.graphhopper.routing.ev.RouteNetwork;
 import com.graphhopper.routing.util.FerrySpeedCalculator;
-import com.graphhopper.routing.util.TransportationMode;
 import com.graphhopper.routing.util.WayAccess;
 
 import java.util.*;
@@ -20,8 +19,14 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
     private final BooleanEncodedValue roundaboutEnc;
     private final EnumEncodedValue<RouteNetwork> bikeNetworkEnc;
 
-protected BikeCommonAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedValue roundaboutEnc, EnumEncodedValue<RouteNetwork> bikeNetworkEnc) {
-        super(accessEnc, TransportationMode.BIKE);
+    /**
+     * The access restriction list returned from OSMRoadAccessParser.toOSMRestrictions(TransportationMode.Bike)
+     * contains "vehicle". But here we want to allow walking via dismount.
+     */
+    private static final List<String> RESTRICTIONS = Arrays.asList("bicycle", "access");
+
+    protected BikeCommonAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedValue roundaboutEnc, EnumEncodedValue<RouteNetwork> bikeNetworkEnc) {
+        super(accessEnc, RESTRICTIONS);
 
         this.roundaboutEnc = roundaboutEnc;
         this.bikeNetworkEnc = bikeNetworkEnc;
@@ -83,12 +88,6 @@ protected BikeCommonAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedVa
         if (!allowedHighways.contains(highwayValue))
             return WayAccess.CAN_SKIP;
 
-        String sacScale = way.getTag("sac_scale");
-        if (sacScale != null) {
-            if (!isSacScaleAllowed(sacScale))
-                return WayAccess.CAN_SKIP;
-        }
-
         // use the way for pushing
         if (way.hasTag("bicycle", "dismount"))
             return WayAccess.WAY;
@@ -112,7 +111,7 @@ protected BikeCommonAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedVa
         }
 
         // accept only if explicitly tagged for bike usage
-        if ("motorway".equals(highwayValue) || "motorway_link".equals(highwayValue) || "bridleway".equals(highwayValue))
+        if ("motorway".equals(highwayValue) || "motorway_link".equals(highwayValue))
             return WayAccess.CAN_SKIP;
 
         if (way.hasTag("motorroad", "yes"))
@@ -122,11 +121,6 @@ protected BikeCommonAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedVa
             return WayAccess.CAN_SKIP;
 
         return WayAccess.WAY;
-    }
-
-    boolean isSacScaleAllowed(String sacScale) {
-        // other scales are nearly impossible by an ordinary bike, see http://wiki.openstreetmap.org/wiki/Key:sac_scale
-        return "hiking".equals(sacScale);
     }
 
     @Override
