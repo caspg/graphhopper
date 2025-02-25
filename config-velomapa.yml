@@ -80,6 +80,7 @@ graphhopper:
   profiles_ch:
     - profile: bike
     - profile: bike_touring
+    - profile: racingbike
     # - profile: bike_velomapa_map_matching
 
   # Hybrid mode:
