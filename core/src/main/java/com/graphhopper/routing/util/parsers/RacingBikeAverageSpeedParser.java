@@ -54,6 +54,9 @@ public class RacingBikeAverageSpeedParser extends BikeCommonAverageSpeedParser {
         setHighwaySpeed("tertiary", 20);
         setHighwaySpeed("tertiary_link", 20);
 
+        // NOTE(kacper): before it wasn't using unclassified roads even with asphalt surface
+        setHighwaySpeed("unclassified", 19);
+
         addPushingSection("path");
 
         // overwite map from BikeCommon
