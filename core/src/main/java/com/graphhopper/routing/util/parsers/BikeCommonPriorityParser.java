@@ -67,8 +67,8 @@ public abstract class BikeCommonPriorityParser implements TagParser {
         avoidHighwayTags.put("motorway_link", REACH_DESTINATION);
         avoidHighwayTags.put("trunk", REACH_DESTINATION);
         avoidHighwayTags.put("trunk_link", REACH_DESTINATION);
-        avoidHighwayTags.put("primary", BAD);
-        avoidHighwayTags.put("primary_link", BAD);
+        avoidHighwayTags.put("primary", AVOID);
+        avoidHighwayTags.put("primary_link", AVOID);
         avoidHighwayTags.put("secondary", AVOID);
         avoidHighwayTags.put("secondary_link", AVOID);
         avoidHighwayTags.put("bridleway", AVOID);
