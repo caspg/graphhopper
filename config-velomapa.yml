@@ -37,6 +37,9 @@ graphhopper:
     - name: racingbike
       custom_model_files: [racingbike.json]
 
+    - name: mtb
+      custom_model_files: [mtb.json]
+
     # This profile is used to map match official cycling routes
     # that are presented in the velomapa website.
     # They may lead throud roads under construction.
@@ -81,6 +84,7 @@ graphhopper:
     - profile: bike
     - profile: bike_touring
     - profile: racingbike
+    - profile: mtb
     # - profile: bike_velomapa_map_matching
 
   # Hybrid mode:
