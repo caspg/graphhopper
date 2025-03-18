@@ -40,6 +40,9 @@ graphhopper:
     - name: mtb
       custom_model_files: [mtb.json]
 
+    - name: gravel
+      custom_model_files: [gravel.json]
+
     # This profile is used to map match official cycling routes
     # that are presented in the velomapa website.
     # They may lead throud roads under construction.
