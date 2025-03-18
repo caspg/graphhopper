@@ -10,8 +10,8 @@
     { "if": "surface == PAVED || surface == ASPHALT", "multiply_by": "1.2" },
     { "if": "surface == GRAVEL || surface == FINE_GRAVEL", "multiply_by": "1.4" },
     { "if": "surface == CONCRETE", "multiply_by": "1.1" },
-    { "if": "tracktype == GRADE1 || tracktype == GRADE2", "multiply_by": "1.3" },
-    { "if": "tracktype == GRADE4 || tracktype == GRADE5", "multiply_by": "0.5" }
+    { "if": "track_type == GRADE1 || track_type == GRADE2", "multiply_by": "1.3" },
+    { "if": "track_type == GRADE4 || track_type == GRADE5", "multiply_by": "0.5" }
   ],
   "speed": [
     { "if": "true", "limit_to": "mtb_average_speed" },
@@ -19,8 +19,8 @@
     { "if": "surface == PAVED || surface == ASPHALT", "multiply_by": "1.3" },
     { "if": "surface == CONCRETE", "multiply_by": "1.3" },
     { "if": "surface == GRAVEL || surface == FINE_GRAVEL", "multiply_by": "1.2" },
-    { "if": "tracktype == GRADE1", "multiply_by": "1.2" },
-    { "if": "tracktype == GRADE4", "multiply_by": "0.8" },
-    { "if": "tracktype == GRADE5", "multiply_by": "0.6" }
+    { "if": "track_type == GRADE1", "multiply_by": "1.2" },
+    { "if": "track_type == GRADE4", "multiply_by": "0.8" },
+    { "if": "track_type == GRADE5", "multiply_by": "0.6" }
   ]
 }
