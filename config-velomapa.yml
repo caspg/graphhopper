@@ -129,7 +129,9 @@ graphhopper:
   #### Elevation ####
 
   # To populate your graph with elevation data use SRTM, default is noop (no elevation). Read more about it in docs/core/elevation.md
-  graph.elevation.provider: srtm
+  # HGT provider using existing hgt files in the cache directory. SRTM is also using hgt files but will download missing files. 
+  # HGT is useful when you have better sources than available on SRTM.
+  graph.elevation.provider: hgt
 
   # default location for cache is /tmp/srtm
   # graph.elevation.cache_dir: REPLACED_BY_DOCKERFILE
