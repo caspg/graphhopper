@@ -35,7 +35,7 @@ graphhopper:
       custom_model_files: [bike_touring.json]
 
     - name: racingbike
-      custom_model_files: [racingbike.json]
+      custom_model_files: [racingbike.json, bike_elevation.json]
 
     - name: mtb
       custom_model_files: [mtb.json]
