@@ -32,7 +32,7 @@ graphhopper:
 
     # Favours official cycling networks.
     - name: bike_touring
-      custom_model_files: [bike_touring.json]
+      custom_model_files: [bike_touring.json, bike_elevation.json]
 
     - name: racingbike
       custom_model_files: [racingbike.json, bike_elevation.json]
