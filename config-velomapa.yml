@@ -28,7 +28,7 @@ graphhopper:
 
   profiles:
     - name: bike
-      custom_model_files: [bike.json]
+      custom_model_files: [bike.json, bike_elevation.json]
 
     # Favours official cycling networks.
     - name: bike_touring
@@ -38,10 +38,10 @@ graphhopper:
       custom_model_files: [racingbike.json, bike_elevation.json]
 
     - name: mtb
-      custom_model_files: [mtb.json]
+      custom_model_files: [mtb.json, bike_elevation.json]
 
     - name: gravel
-      custom_model_files: [gravel.json]
+      custom_model_files: [gravel.json, bike_elevation.json]
 
     # This profile is used to map match official cycling routes
     # that are presented in the velomapa website.
