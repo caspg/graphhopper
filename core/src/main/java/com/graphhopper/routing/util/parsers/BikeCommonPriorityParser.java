@@ -15,7 +15,6 @@ import static com.graphhopper.routing.util.PriorityCode.*;
 import static com.graphhopper.routing.util.parsers.AbstractAccessParser.INTENDED;
 
 public abstract class BikeCommonPriorityParser implements TagParser {
-
     // Bicycle tracks subject to compulsory use in Germany and Poland (https://wiki.openstreetmap.org/wiki/DE:Key:cycleway)
     private static final List<String> CYCLEWAY_BICYCLE_KEYS = List.of("cycleway:bicycle", "cycleway:both:bicycle", "cycleway:left:bicycle", "cycleway:right:bicycle");
 
@@ -85,6 +84,7 @@ public abstract class BikeCommonPriorityParser implements TagParser {
     public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way, IntsRef relationFlags) {
         String highwayValue = way.getTag("highway");
         Integer priorityFromRelation = routeMap.get(bikeRouteEnc.getEnum(false, edgeId, edgeIntAccess));
+        RouteNetwork bikeNetork = this.bikeRouteEnc.getEnum(false, edgeId, edgeIntAccess);
         if (highwayValue == null) {
             if (FerrySpeedCalculator.isFerry(way)) {
                 priorityFromRelation = SLIGHT_AVOID.getValue();
@@ -94,7 +94,7 @@ public abstract class BikeCommonPriorityParser implements TagParser {
         }
 
         double maxSpeed = Math.max(avgSpeedEnc.getDecimal(false, edgeId, edgeIntAccess), avgSpeedEnc.getDecimal(true, edgeId, edgeIntAccess));
-        priorityEnc.setDecimal(false, edgeId, edgeIntAccess, PriorityCode.getValue(handlePriority(way, maxSpeed, priorityFromRelation)));
+        priorityEnc.setDecimal(false, edgeId, edgeIntAccess, PriorityCode.getValue(handlePriority(way, maxSpeed, priorityFromRelation, bikeNetork)));
     }
 
     /**
@@ -103,14 +103,14 @@ public abstract class BikeCommonPriorityParser implements TagParser {
      *
      * @return new priority based on priorityFromRelation and on the tags in ReaderWay.
      */
-    int handlePriority(ReaderWay way, double wayTypeSpeed, Integer priorityFromRelation) {
+    int handlePriority(ReaderWay way, double wayTypeSpeed, Integer priorityFromRelation, RouteNetwork bikeNetork) {
         TreeMap<Double, PriorityCode> weightToPrioMap = new TreeMap<>();
         if (priorityFromRelation == null)
             weightToPrioMap.put(0d, UNCHANGED);
         else
             weightToPrioMap.put(110d, PriorityCode.valueOf(priorityFromRelation));
 
-        collect(way, wayTypeSpeed, weightToPrioMap);
+        collect(way, wayTypeSpeed, weightToPrioMap, bikeNetork);
 
         // pick priority with biggest order value
         return weightToPrioMap.lastEntry().getValue().getValue();
@@ -147,8 +147,9 @@ public abstract class BikeCommonPriorityParser implements TagParser {
      * @param weightToPrioMap associate a weight with every priority. This sorted map allows
      *                        subclasses to 'insert' more important priorities as well as overwrite determined priorities.
      */
-    void collect(ReaderWay way, double wayTypeSpeed, TreeMap<Double, PriorityCode> weightToPrioMap) {
+    void collect(ReaderWay way, double wayTypeSpeed, TreeMap<Double, PriorityCode> weightToPrioMap, RouteNetwork bikeNetork) {
         String highway = way.getTag("highway");
+
         if (isDesignated(way)) {
             boolean isGoodSurface = way.getTag("tracktype", "").equals("grade1") || goodSurface.contains(way.getTag("surface",""));
             if ("path".equals(highway) || "track".equals(highway) && isGoodSurface)
@@ -174,7 +175,15 @@ public abstract class BikeCommonPriorityParser implements TagParser {
         } else if (avoidHighwayTags.containsKey(highway)
                 || (maxSpeed != MaxSpeed.MAXSPEED_MISSING && maxSpeed >= avoidSpeedLimit && !"track".equals(highway))) {
             PriorityCode priorityCode = avoidHighwayTags.get(highway);
-            weightToPrioMap.put(50d, priorityCode == null ? AVOID : priorityCode);
+            
+
+            if (bikeNetork != RouteNetwork.MISSING) {
+                // If there's a bike network on an avoided highway, give it a better priority than REACH_DESTINATION
+                weightToPrioMap.put(50d, AVOID);
+            } else {
+                weightToPrioMap.put(50d, priorityCode == null ? AVOID : priorityCode);
+            }
+            
             if (way.hasTag("tunnel", INTENDED)) {
                 PriorityCode worse = priorityCode == null ? BAD : priorityCode.worse().worse();
                 weightToPrioMap.put(50d, worse == EXCLUDE ? REACH_DESTINATION : worse);
