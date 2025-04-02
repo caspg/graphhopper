@@ -87,7 +87,6 @@ graphhopper:
     - profile: bike
     - profile: bike_touring
     - profile: racingbike
-    - profile: mtb
     - profile: gravel
     # - profile: bike_velomapa_map_matching
 
