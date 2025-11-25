@@ -23,7 +23,7 @@ import com.graphhopper.http.GraphHopperBundleConfiguration;
 import com.graphhopper.http.RealtimeConfiguration;
 import io.dropwizard.core.Configuration;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class GraphHopperServerConfiguration extends Configuration implements GraphHopperBundleConfiguration {
 
@@ -42,6 +42,7 @@ public class GraphHopperServerConfiguration extends Configuration implements Gra
         return graphhopper;
     }
 
+    @Override
     public RealtimeConfiguration gtfsrealtime() {
         return gtfsRealtime;
     }

@@ -1,4 +1,8 @@
-### 11.0 [not yet released]
+### 12.0 [not yet released]
+
+
+
+### 11.0 [14 Oct 2025]
 
 - country-dependent toll rules are now always enabled. in the absence of explicit tags or special toll rules we use Toll.NO instead of Toll.MISSING #3111
 - max_weight_except: changed NONE to MISSING
@@ -6,6 +10,8 @@
 - road_access now contains value of highest transportation mode for CAR, i.e. access=private, motorcar=yes will now return YES and not PRIVATE
 - car.json by default avoids private roads
 - maxspeed<5 is ignored, maxspeed=none is ignored with some exceptions, maxspeed parsing and related constants were renamed #3077
+- improved performance by sorting graph during import, #3177
+- trunk roads in Austria are no longer considered to be toll roads by default
 
 ### 10.0 [5 Nov 2024]
 

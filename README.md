@@ -75,70 +75,74 @@ to get started with contribution.
 
 To get started you can try [GraphHopper Maps](README.md#graphhopper-maps), read through [our documentation](./docs/index.md) and install GraphHopper including the Maps UI locally.
 
--   9.x: [documentation](https://github.com/graphhopper/graphhopper/blob/9.x/docs/index.md)
-    , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/9.1/graphhopper-web-9.1.jar)
-    , [announcement](https://www.graphhopper.com/blog/2024/04/23/graphhopper-routing-engine-9-0-released)
--   unstable master: [documentation](https://github.com/graphhopper/graphhopper/blob/master/docs/index.md)
+* 11.x: [documentation](https://github.com/graphhopper/graphhopper/blob/11.x/docs/index.md)
+  , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.0/graphhopper-web-11.0.jar)
+  , [announcement](https://www.graphhopper.com/blog/2025/10/14/graphhopper-routing-engine-11-0-released/)
+* unstable master: [documentation](https://github.com/graphhopper/graphhopper/blob/master/docs/index.md)
 
 See the [changelog file](./CHANGELOG.md) for Java API Changes.
 
 <details><summary>Click to see older releases</summary>
 
--   See our [changelog file](./CHANGELOG.md) for Java API Changes.
-
--   8.x: [documentation](https://github.com/graphhopper/graphhopper/blob/8.x/docs/index.md)
-    , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/8.0/graphhopper-web-8.0.jar)
-    , [announcement](https://www.graphhopper.com/blog/2023/10/18/graphhopper-routing-engine-8-0-released/)
--   7.x: [documentation](https://github.com/graphhopper/graphhopper/blob/7.x/docs/index.md)
-    , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/7.0/graphhopper-web-7.0.jar)
-    , [announcement](https://www.graphhopper.com/blog/2023/03/14/graphhopper-routing-engine-7-0-released/)
--   6.x: [documentation](https://github.com/graphhopper/graphhopper/blob/6.x/docs/index.md)
-    , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/6.2/graphhopper-web-6.2.jar)
-    , [announcement](https://www.graphhopper.com/blog/2022/09/19/graphhopper-routing-engine-6-0-released/)
--   5.x: [documentation](https://github.com/graphhopper/graphhopper/blob/5.x/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/5.3/graphhopper-web-5.3.jar)
-    , [announcement](https://www.graphhopper.com/blog/2022/03/23/graphhopper-routing-engine-5-0-released/)
--   4.x: [documentation](https://github.com/graphhopper/graphhopper/blob/4.x/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/4.0/graphhopper-web-4.0.jar)
-    , [announcement](https://www.graphhopper.com/blog/2021/09/29/graphhopper-routing-engine-4-0-released/)
--   3.x: [documentation](https://github.com/graphhopper/graphhopper/blob/3.x/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/3.2/graphhopper-web-3.2.jar)
-    , [announcement](https://www.graphhopper.com/blog/2021/05/18/graphhopper-routing-engine-3-0-released/)
--   2.x: [documentation](https://github.com/graphhopper/graphhopper/blob/2.x/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/2.4/graphhopper-web-2.4.jar)
-    , [announcement](https://www.graphhopper.com/blog/2020/09/30/graphhopper-routing-engine-2-0-released/)
--   1.0: [documentation](https://github.com/graphhopper/graphhopper/blob/1.0/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/1.0/graphhopper-web-1.0.jar)
-    , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/1.0/graphhopper-android-1.0.apk)
-    , [announcement](https://www.graphhopper.com/blog/2020/05/25/graphhopper-routing-engine-1-0-released/)
--   0.13.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.13/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/0.13.0/graphhopper-web-0.13.0.jar)
-    , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.13.0/graphhopper-android-0.13.0.apk)
-    , [announcement](https://www.graphhopper.com/blog/2019/09/18/graphhopper-routing-engine-0-13-released/)
--   0.12.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.12/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/0.12.0/graphhopper-web-0.12.0.jar)
-    , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.12.0/graphhopper-android-0.12.0.apk)
-    , [announcement](https://www.graphhopper.com/blog/2019/03/26/graphhopper-routing-engine-0-12-released/)
--   0.11.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.11/docs/index.md)
-    , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/0.11.0/graphhopper-web-0.11.0.jar)
-    , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.11.0/graphhopper-android-0.11.0.apk)
-    , [announcement](https://www.graphhopper.com/blog/2018/09/17/graphhopper-routing-engine-0-11-release-open-sourcing-the-isochrone-module/)
--   0.10.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.10/docs/index.md)
-    , [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.10.3/graphhopper-web-0.10.3-bin.zip)
-    , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.10.3/graphhopper-android-0.10.3.apk)
-    , [announcement](https://www.graphhopper.com/blog/2018/03/08/graphhopper-routing-engine-0-10-released/)
--   0.9.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.9/docs/index.md)
-    , [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.9.0/graphhopper-web-0.9.0-bin.zip)
-    , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.9.0/graphhopper-android-0.9.0.apk)
-    , [announcement](https://www.graphhopper.com/blog/2017/05/31/graphhopper-routing-engine-0-9-released/)
--   0.8.2: [documentation](https://github.com/graphhopper/graphhopper/blob/0.8/docs/index.md)
-    , [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.8.2/graphhopper-web-0.8.2-bin.zip)
-    , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.8.2/graphhopper-android-0.8.2.apk)
-    , [announcement](https://www.graphhopper.com/blog/2016/10/18/graphhopper-routing-engine-0-8-released/)
--   0.7.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.7/docs/index.md)
-, [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.7.0/graphhopper-web-0.7.0-bin.zip)
-, [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.7.0/graphhopper-android-0.7.0.apk)
-, [announcement](https://www.graphhopper.com/blog/2016/06/15/graphhopper-routing-engine-0-7-released/)
+* 10.x: [documentation](https://github.com/graphhopper/graphhopper/blob/10.x/docs/index.md)
+  , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/10.0/graphhopper-web-10.0.jar)
+  , [announcement](https://www.graphhopper.com/blog/2024/11/05/graphhopper-routing-engine-10-0-released/)
+* 9.x: [documentation](https://github.com/graphhopper/graphhopper/blob/9.x/docs/index.md)
+  , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/9.1/graphhopper-web-9.1.jar)
+  , [announcement](https://www.graphhopper.com/blog/2024/04/23/graphhopper-routing-engine-9-0-released)
+* 8.x: [documentation](https://github.com/graphhopper/graphhopper/blob/8.x/docs/index.md)
+  , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/8.0/graphhopper-web-8.0.jar)
+  , [announcement](https://www.graphhopper.com/blog/2023/10/18/graphhopper-routing-engine-8-0-released/)
+* 7.x: [documentation](https://github.com/graphhopper/graphhopper/blob/7.x/docs/index.md)
+  , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/7.0/graphhopper-web-7.0.jar)
+  , [announcement](https://www.graphhopper.com/blog/2023/03/14/graphhopper-routing-engine-7-0-released/)
+* 6.x: [documentation](https://github.com/graphhopper/graphhopper/blob/6.x/docs/index.md)
+  , [web service jar](https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/6.2/graphhopper-web-6.2.jar)
+  , [announcement](https://www.graphhopper.com/blog/2022/09/19/graphhopper-routing-engine-6-0-released/)
+* 5.x: [documentation](https://github.com/graphhopper/graphhopper/blob/5.x/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/5.3/graphhopper-web-5.3.jar)
+  , [announcement](https://www.graphhopper.com/blog/2022/03/23/graphhopper-routing-engine-5-0-released/)
+* 4.x: [documentation](https://github.com/graphhopper/graphhopper/blob/4.x/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/4.0/graphhopper-web-4.0.jar)
+  , [announcement](https://www.graphhopper.com/blog/2021/09/29/graphhopper-routing-engine-4-0-released/)
+* 3.x: [documentation](https://github.com/graphhopper/graphhopper/blob/3.x/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/3.2/graphhopper-web-3.2.jar)
+  , [announcement](https://www.graphhopper.com/blog/2021/05/18/graphhopper-routing-engine-3-0-released/)
+* 2.x: [documentation](https://github.com/graphhopper/graphhopper/blob/2.x/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/2.4/graphhopper-web-2.4.jar)
+  , [announcement](https://www.graphhopper.com/blog/2020/09/30/graphhopper-routing-engine-2-0-released/)
+* 1.0: [documentation](https://github.com/graphhopper/graphhopper/blob/1.0/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/1.0/graphhopper-web-1.0.jar)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/1.0/graphhopper-android-1.0.apk)
+  , [announcement](https://www.graphhopper.com/blog/2020/05/25/graphhopper-routing-engine-1-0-released/)
+* 0.13.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.13/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/0.13.0/graphhopper-web-0.13.0.jar)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.13.0/graphhopper-android-0.13.0.apk)
+  , [announcement](https://www.graphhopper.com/blog/2019/09/18/graphhopper-routing-engine-0-13-released/)
+* 0.12.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.12/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/0.12.0/graphhopper-web-0.12.0.jar)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.12.0/graphhopper-android-0.12.0.apk)
+  , [announcement](https://www.graphhopper.com/blog/2019/03/26/graphhopper-routing-engine-0-12-released/)
+* 0.11.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.11/docs/index.md)
+  , [web service jar](https://github.com/graphhopper/graphhopper/releases/download/0.11.0/graphhopper-web-0.11.0.jar)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.11.0/graphhopper-android-0.11.0.apk)
+  , [announcement](https://www.graphhopper.com/blog/2018/09/17/graphhopper-routing-engine-0-11-release-open-sourcing-the-isochrone-module/)
+* 0.10.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.10/docs/index.md)
+  , [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.10.3/graphhopper-web-0.10.3-bin.zip)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.10.3/graphhopper-android-0.10.3.apk)
+  , [announcement](https://www.graphhopper.com/blog/2018/03/08/graphhopper-routing-engine-0-10-released/)
+* 0.9.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.9/docs/index.md)
+  , [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.9.0/graphhopper-web-0.9.0-bin.zip)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.9.0/graphhopper-android-0.9.0.apk)
+  , [announcement](https://www.graphhopper.com/blog/2017/05/31/graphhopper-routing-engine-0-9-released/)
+* 0.8.2: [documentation](https://github.com/graphhopper/graphhopper/blob/0.8/docs/index.md)
+  , [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.8.2/graphhopper-web-0.8.2-bin.zip)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.8.2/graphhopper-android-0.8.2.apk)
+  , [announcement](https://www.graphhopper.com/blog/2016/10/18/graphhopper-routing-engine-0-8-released/)
+* 0.7.0: [documentation](https://github.com/graphhopper/graphhopper/blob/0.7/docs/index.md)
+  , [web service zip](https://github.com/graphhopper/graphhopper/releases/download/0.7.0/graphhopper-web-0.7.0-bin.zip)
+  , [Android APK](https://github.com/graphhopper/graphhopper/releases/download/0.7.0/graphhopper-android-0.7.0.apk)
+  , [announcement](https://www.graphhopper.com/blog/2016/06/15/graphhopper-routing-engine-0-7-released/)
 </details>
 
 ## Installation
@@ -146,8 +150,8 @@ See the [changelog file](./CHANGELOG.md) for Java API Changes.
 To install the [GraphHopper Maps](https://graphhopper.com/maps/) UI and the web service locally you [need a JVM](https://adoptium.net) (>= Java 17) and do:
 
 ```bash
-wget https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/10.0/graphhopper-web-10.0.jar \
-  https://raw.githubusercontent.com/graphhopper/graphhopper/10.x/config-example.yml \
+wget https://repo1.maven.org/maven2/com/graphhopper/graphhopper-web/11.0/graphhopper-web-11.0.jar \
+  https://raw.githubusercontent.com/graphhopper/graphhopper/11.x/config-example.yml \
   http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
 java -D"dw.graphhopper.datareader.file=berlin-latest.osm.pbf" -jar graphhopper*.jar server config-example.yml
 ```
@@ -164,18 +168,21 @@ The Docker images created by the community from the `master` branch can be found
 
 ## GraphHopper Maps
 
-To see the road routing feature of GraphHopper in action please go to [GraphHopper Maps](https://graphhopper.com/maps).
+The GraphHopper routing server uses GraphHopper Maps as web interface, which is also [open source](https://github.com/graphhopper/graphhopper-maps).
 
-[![GraphHopper Maps](https://www.graphhopper.com/wp-content/uploads/2022/10/maps2-1024x661.png)](https://graphhopper.com/maps)
+To see GraphHopper Maps in action go to [graphhopper.com/maps/](https://graphhopper.com/maps/),
+which is an instance of GraphHopper Maps and available for free, via encrypted connections and from German servers - for a nice and private route planning experience!
 
-GraphHopper Maps is an open source user interface, which you can find [here](https://github.com/graphhopper/graphhopper-maps).
-It can use this open source routing engine or the [GraphHopper Directions API](https://www.graphhopper.com),
-which provides the Routing API, a Route Optimization API (based on [jsprit](http://jsprit.github.io/)),
-a fast Matrix API and an address search (based on [photon](https://github.com/komoot/photon)).
-The photon project is also supported by the GraphHopper GmbH. Additionally to the GraphHopper
-Directions API, map tiles from various providers are used, with the default being [Omniscale](http://omniscale.com/).
+[![GraphHopper Maps](https://www.graphhopper.com/wp-content/uploads/2025/06/graphhopper-maps-2025.png)](https://graphhopper.com/maps)
 
-All this is available for free, via encrypted connections and from German servers - for a nice and private route planning experience!
+## GraphHopper Directions API
+
+The GraphHopper Directions API is [our](https://www.graphhopper.com/) commercial offering that provides
+[multiple APIs](https://docs.graphhopper.com) based on this open source routing engine: the Routing API, the Matrix API, the Isochrone API and the Map Matching API.
+
+It also provides the Route Optimization API, which is based on our open source [jsprit project](http://jsprit.github.io/) and uses the fast Matrix API behind the scenes.
+
+The address search is based on the open source [photon project](https://github.com/komoot/photon), which is supported by GraphHopper GmbH.
 
 ## Public Transit
 
