@@ -51,8 +51,17 @@ public class RacingBikePriorityParser extends BikeCommonPriorityParser {
             weightToPrioMap.put(40d, SLIGHT_AVOID);
         } else if ("track".equals(highway)) {
             String trackType = way.getTag("tracktype");
-            if ("grade1".equals(trackType) || goodSurface.contains(way.getTag("surface", "")))
-                weightToPrioMap.put(110d, VERY_NICE);
+
+            // 
+            // NOTE(VeloPlanner): before it was VERY_NICE for grade1 or good surface
+            // this lead to prefer track over other main roads which is not really what racingbike priority is.
+            // Now only we prefer it if the surface is good, otherwise we avoid it.
+            // 
+            // if ("grade1".equals(trackType) || goodSurface.contains(way.getTag("surface", "")))
+            //     weightToPrioMap.put(110d, VERY_NICE);
+            // 
+            if (goodSurface.contains(way.getTag("surface", "")))
+                weightToPrioMap.put(110d, SLIGHT_PREFER);
             else if (trackType == null || trackType.startsWith("grade"))
                 weightToPrioMap.put(110d, AVOID_MORE);
         }
