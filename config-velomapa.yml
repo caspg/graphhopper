@@ -144,20 +144,19 @@ graphhopper:
   # Reduce ascend/descend per edge without changing the maximum slope:
   graph.elevation.edge_smoothing: ramer
   # removes elevation fluctuations up to max_elevation (in meter) and replaces the elevation with a value based on the average slope
-  graph.elevation.edge_smoothing.ramer.max_elevation: 10
   # Using an averaging approach for smoothing will reveal values not affected by outliers and realistic slopes and total altitude values (up and down)
-  graph.elevation.edge_smoothing: moving_average
   # window size in meter along a way used for averaging a node's elevation
-  graph.elevation.edge_smoothing.moving_average.window_size: 150
+  # Lower values preserve more detail (default 5, was 10)
+  graph.elevation.edge_smoothing.ramer.max_elevation: 3
 
   # To increase elevation profile resolution, use the following two parameters to tune the extra resolution you need
   # against the additional storage space used for edge geometries. You should enable bilinear interpolation when using
   # these features (see #1953 for details).
   # - first, set the distance (in meters) at which elevation samples should be taken on long edges
-  # graph.elevation.long_edge_sampling_distance: 60
+  graph.elevation.long_edge_sampling_distance: 50
   # - second, set the elevation tolerance (in meters) to use when simplifying polylines since the default ignores
   #   elevation and will remove the extra points that long edge sampling added
-  # graph.elevation.way_point_max_distance: 10
+  graph.elevation.way_point_max_distance: 10
 
   #### Country-dependent defaults for max speeds ####
 
