@@ -200,9 +200,10 @@ public class MapMatching {
         statistics.put("filteredObservations", filteredObservations.size());
 
         // Snap observations to links. Generates multiple candidate snaps per observation.
-        List<List<Snap>> snapsPerObservation = filteredObservations.stream()
-                .map(o -> findCandidateSnaps(o.getPoint().lat, o.getPoint().lon))
-                .collect(Collectors.toList());
+        List<List<Snap>> snapsPerObservation = new ArrayList<>();
+        for (Observation o : filteredObservations) {
+            snapsPerObservation.add(findCandidateSnaps(o.getPoint().lat, o.getPoint().lon));
+        }
         statistics.put("snapsPerObservation", snapsPerObservation.stream().mapToInt(Collection::size).toArray());
 
         // Create the query graph, containing split edges so that all the places where an observation might have happened
@@ -211,7 +212,7 @@ public class MapMatching {
 
         // Creates candidates from the Snaps of all observations (a candidate is basically a
         // Snap + direction).
-        List<ObservationWithCandidateStates> timeSteps = createTimeSteps(filteredObservations, snapsPerObservation);
+        List<ObservationWithCandidateStates> timeSteps = createTimeSteps(filteredObservations, snapsPerObservation, router.getWeighting());
 
         // Compute the most likely sequence of map matching candidates:
         List<SequenceState<State, Observation, Path>> seq = computeViterbiSequence(timeSteps);
@@ -326,7 +327,7 @@ public class MapMatching {
      * transition probabilities. Creates directed candidates for virtual nodes and undirected
      * candidates for real nodes.
      */
-    private List<ObservationWithCandidateStates> createTimeSteps(List<Observation> filteredObservations, List<List<Snap>> splitsPerObservation) {
+    private List<ObservationWithCandidateStates> createTimeSteps(List<Observation> filteredObservations, List<List<Snap>> splitsPerObservation, Weighting weighting) {
         if (splitsPerObservation.size() != filteredObservations.size()) {
             throw new IllegalArgumentException(
                     "filteredGPXEntries and queriesPerEntry must have same size.");
@@ -360,6 +361,16 @@ public class MapMatching {
                     // out by the Viterbi algorithm.
                     candidates.add(new State(observation, split, virtualEdges.get(0), virtualEdges.get(1)));
                     candidates.add(new State(observation, split, virtualEdges.get(1), virtualEdges.get(0)));
+
+                    // For bidirectional edges, add an undirected fallback candidate.
+                    // This helps with out-and-back routes where directional constraints
+                    // can cause the algorithm to prefer farther roads due to routing costs.
+                    EdgeIteratorState originalEdge = split.getClosestEdge();
+                    boolean canGoForward = Double.isFinite(weighting.calcEdgeWeight(originalEdge, false));
+                    boolean canGoBackward = Double.isFinite(weighting.calcEdgeWeight(originalEdge, true));
+                    if (canGoForward && canGoBackward) {
+                        candidates.add(new State(observation, split));
+                    }
                 } else {
                     // Create an undirected candidate for the real node.
                     candidates.add(new State(observation, split));
