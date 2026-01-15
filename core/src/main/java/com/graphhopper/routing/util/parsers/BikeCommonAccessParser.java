@@ -103,13 +103,13 @@ public abstract class BikeCommonAccessParser extends AbstractAccessParser implem
                     return WayAccess.WAY;
             }
             for (String value : restrict) {
-                if (restrictedValues.contains(value) && !hasPermissiveTemporalRestriction(way, firstIndex, restrictionKeys, allowedValues))
+                if (restrictedValues.contains(value) && !hasPermissiveTemporalRestriction(way, firstIndex, restrictionKeys, allowedValues)) {
                     // (VeloPlanner): if access is restricted but there is a bike network, then use the way
                     if (routeNetwork != RouteNetwork.MISSING) {
                         return WayAccess.WAY;
                     }
-
                     return WayAccess.CAN_SKIP;
+                }
             }
         }
 
