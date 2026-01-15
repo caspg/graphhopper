@@ -17,9 +17,6 @@
  */
 package com.graphhopper.routing.ev;
 
-import com.graphhopper.reader.ReaderWay;
-import com.graphhopper.routing.util.TransportationMode;
-import com.graphhopper.routing.util.countryrules.CountryRule;
 import com.graphhopper.util.Helper;
 
 /**
@@ -28,7 +25,7 @@ import com.graphhopper.util.Helper;
  * delivering. The NO value does not permit any access.
  */
 public enum RoadAccess {
-    YES, DESTINATION, CUSTOMERS, DELIVERY, PRIVATE, AGRICULTURAL, FORESTRY, NO;
+    YES, DESTINATION, CUSTOMERS, DELIVERY, PRIVATE, MILITARY, AGRICULTURAL, FORESTRY, NO;
 
     public static final String KEY = "road_access";
 
@@ -52,10 +49,5 @@ public enum RoadAccess {
         } catch (IllegalArgumentException ex) {
             return YES;
         }
-    }
-
-    public static RoadAccess countryHook(ReaderWay readerWay, RoadAccess roadAccess) {
-        CountryRule countryRule = readerWay.getTag("country_rule", null);
-        return countryRule == null ? roadAccess : countryRule.getAccess(readerWay, TransportationMode.CAR, roadAccess == null ? RoadAccess.YES : roadAccess);
     }
 }

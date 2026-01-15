@@ -41,10 +41,8 @@ import com.graphhopper.routing.lm.PrepareLandmarks;
 import com.graphhopper.routing.subnetwork.PrepareRoutingSubnetworks;
 import com.graphhopper.routing.subnetwork.PrepareRoutingSubnetworks.PrepareJob;
 import com.graphhopper.routing.util.*;
-import com.graphhopper.routing.util.countryrules.CountryRuleFactory;
 import com.graphhopper.routing.util.parsers.OSMBikeNetworkTagParser;
 import com.graphhopper.routing.util.parsers.OSMFootNetworkTagParser;
-import com.graphhopper.routing.util.parsers.OSMMtbNetworkTagParser;
 import com.graphhopper.routing.util.parsers.TagParser;
 import com.graphhopper.routing.weighting.Weighting;
 import com.graphhopper.routing.weighting.custom.CustomModelParser;
@@ -91,8 +89,6 @@ public class GraphHopper {
     private final TranslationMap trMap = new TranslationMap().doImport();
     boolean removeZipped = true;
     boolean calcChecksums = false;
-    // for country rules:
-    private CountryRuleFactory countryRuleFactory = null;
     // for custom areas:
     private String customAreasDirectory = "";
     // for graph:
@@ -455,18 +451,6 @@ public class GraphHopper {
     }
 
     /**
-     * Sets the factory used to create country rules. Use `null` to disable country rules
-     */
-    public GraphHopper setCountryRuleFactory(CountryRuleFactory countryRuleFactory) {
-        this.countryRuleFactory = countryRuleFactory;
-        return this;
-    }
-
-    public CountryRuleFactory getCountryRuleFactory() {
-        return this.countryRuleFactory;
-    }
-
-    /**
      * Reads the configuration from a {@link GraphHopperConfig} object which can be manually filled, or more typically
      * is read from `config.yml`.
      * <p>
@@ -500,7 +484,6 @@ public class GraphHopper {
         }
         ghLocation = graphHopperFolder;
 
-        countryRuleFactory = ghConfig.getBool("country_rules.enabled", false) ? new CountryRuleFactory() : null;
         customAreasDirectory = ghConfig.getString("custom_areas.directory", customAreasDirectory);
 
         defaultSegmentSize = ghConfig.getInt("graph.dataaccess.segment_size", defaultSegmentSize);
@@ -675,9 +658,9 @@ public class GraphHopper {
         }
 
         if (encodingManager.hasEncodedValue(BikeNetwork.KEY))
-            osmParsers.addRelationTagParser(relConfig -> new OSMBikeNetworkTagParser(encodingManager.getEnumEncodedValue(BikeNetwork.KEY, RouteNetwork.class), relConfig));
+            osmParsers.addRelationTagParser(relConfig -> new OSMBikeNetworkTagParser(encodingManager.getEnumEncodedValue(BikeNetwork.KEY, RouteNetwork.class), relConfig, "bicycle"));
         if (encodingManager.hasEncodedValue(MtbNetwork.KEY))
-            osmParsers.addRelationTagParser(relConfig -> new OSMMtbNetworkTagParser(encodingManager.getEnumEncodedValue(MtbNetwork.KEY, RouteNetwork.class), relConfig));
+            osmParsers.addRelationTagParser(relConfig -> new OSMBikeNetworkTagParser(encodingManager.getEnumEncodedValue(MtbNetwork.KEY, RouteNetwork.class), relConfig, "mtb"));
         if (encodingManager.hasEncodedValue(FootNetwork.KEY))
             osmParsers.addRelationTagParser(relConfig -> new OSMFootNetworkTagParser(encodingManager.getEnumEncodedValue(FootNetwork.KEY, RouteNetwork.class), relConfig));
 
@@ -946,17 +929,11 @@ public class GraphHopper {
         }
 
         AreaIndex<CustomArea> areaIndex = new AreaIndex<>(customAreas);
-        if (countryRuleFactory == null || countryRuleFactory.getCountryToRuleMap().isEmpty()) {
-            logger.info("No country rules available");
-        } else {
-            logger.info("Applying rules for the following countries: {}", countryRuleFactory.getCountryToRuleMap().keySet());
-        }
 
         logger.info("start creating graph from " + osmFile);
         OSMReader reader = new OSMReader(baseGraph.getBaseGraph(), osmParsers, osmReaderConfig).setFile(_getOSMFile()).
                 setAreaIndex(areaIndex).
-                setElevationProvider(eleProvider).
-                setCountryRuleFactory(countryRuleFactory);
+                setElevationProvider(eleProvider);
         logger.info("using " + getBaseGraphString() + ", memory:" + getMemInfo());
 
         createBaseGraphAndProperties();

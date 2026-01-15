@@ -15,7 +15,6 @@ public class BikeAccessParser extends BikeCommonAccessParser {
                 lookup.getBooleanEncodedValue(Roundabout.KEY),
                 lookup.getEnumEncodedValue(RouteNetwork.key("bike"), RouteNetwork.class));
         blockPrivate(properties.getBool("block_private", true));
-        blockFords(properties.getBool("block_fords", false));
     }
 
     public BikeAccessParser(BooleanEncodedValue accessEnc, BooleanEncodedValue roundaboutEnc, EnumEncodedValue<RouteNetwork> bikeNetworkEnc) {
