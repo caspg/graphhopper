@@ -24,7 +24,7 @@ import com.graphhopper.util.Helper;
  * that do not fit get "other" as value.
  */
 public enum RoadEnvironment {
-    OTHER, ROAD, FERRY, TUNNEL, BRIDGE, FORD;
+    OTHER, ROAD, FERRY, SHUTTLE_TRAIN, TUNNEL, BRIDGE, FORD;
 
     public static final String KEY = "road_environment";
 

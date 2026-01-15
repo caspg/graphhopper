@@ -41,7 +41,9 @@ public class OSMRoadEnvironmentParser implements TagParser {
     @Override
     public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay readerWay, IntsRef relationFlags) {
         RoadEnvironment roadEnvironment = OTHER;
-        if (FerrySpeedCalculator.isFerry(readerWay))
+        if (isShuttleTrain(readerWay))
+            roadEnvironment = SHUTTLE_TRAIN;
+        else if (FerrySpeedCalculator.isFerry(readerWay))
             roadEnvironment = FERRY;
         else if (readerWay.hasTag("bridge") && !readerWay.hasTag("bridge", "no"))
             roadEnvironment = BRIDGE;
@@ -60,5 +62,9 @@ public class OSMRoadEnvironmentParser implements TagParser {
 
         if (roadEnvironment != OTHER)
             roadEnvEnc.setEnum(false, edgeId, edgeIntAccess, roadEnvironment);
+    }
+
+    private static boolean isShuttleTrain(ReaderWay way) {
+        return way.hasTag("route", "shuttle_train") && !way.hasTag("shuttle_train", "no");
     }
 }

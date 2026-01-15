@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class OSMRoadEnvironmentParserTest {
 
     @Test
-    void ferry() {
+    void shuttleTrain() {
         EnumEncodedValue<RoadEnvironment> roadEnvironmentEnc = RoadEnvironment.create();
         roadEnvironmentEnc.init(new EncodedValue.InitializerConfig());
         OSMRoadEnvironmentParser parser = new OSMRoadEnvironmentParser(roadEnvironmentEnc);
@@ -36,6 +36,20 @@ class OSMRoadEnvironmentParserTest {
         int edgeId = 0;
         ReaderWay way = new ReaderWay(0);
         way.setTag("route", "shuttle_train");
+        parser.handleWayTags(edgeId, edgeIntAccess, way, new IntsRef(2));
+        RoadEnvironment roadEnvironment = roadEnvironmentEnc.getEnum(false, edgeId, edgeIntAccess);
+        assertEquals(RoadEnvironment.SHUTTLE_TRAIN, roadEnvironment);
+    }
+
+    @Test
+    void ferry() {
+        EnumEncodedValue<RoadEnvironment> roadEnvironmentEnc = RoadEnvironment.create();
+        roadEnvironmentEnc.init(new EncodedValue.InitializerConfig());
+        OSMRoadEnvironmentParser parser = new OSMRoadEnvironmentParser(roadEnvironmentEnc);
+        EdgeIntAccess edgeIntAccess = new ArrayEdgeIntAccess(1);
+        int edgeId = 0;
+        ReaderWay way = new ReaderWay(0);
+        way.setTag("route", "ferry");
         parser.handleWayTags(edgeId, edgeIntAccess, way, new IntsRef(2));
         RoadEnvironment roadEnvironment = roadEnvironmentEnc.getEnum(false, edgeId, edgeIntAccess);
         assertEquals(RoadEnvironment.FERRY, roadEnvironment);
