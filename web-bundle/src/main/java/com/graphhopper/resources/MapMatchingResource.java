@@ -101,7 +101,8 @@ public class MapMatchingResource {
             @QueryParam("gpx.route") @DefaultValue("true") boolean withRoute,
             @QueryParam("gpx.track") @DefaultValue("true") boolean withTrack,
             @QueryParam("traversal_keys") @DefaultValue("false") boolean enableTraversalKeys,
-            @QueryParam("gps_accuracy") @DefaultValue("10") double gpsAccuracy) {
+            @QueryParam("gps_accuracy") @DefaultValue("10") double gpsAccuracy,
+            @QueryParam("search_radius") @DefaultValue("10") double searchRadius) {
         boolean writeGPX = "gpx".equalsIgnoreCase(outType);
         if (gpx.trk.isEmpty()) {
             throw new IllegalArgumentException("No tracks found in GPX document. Are you using waypoints or routes instead?");
@@ -128,6 +129,7 @@ public class MapMatchingResource {
 
         MapMatching matching = new MapMatching(graphHopper.getBaseGraph(), (LocationIndexTree) graphHopper.getLocationIndex(), mapMatchingRouterFactory.createMapMatchingRouter(hints));
         matching.setMeasurementErrorSigma(gpsAccuracy);
+        matching.setSearchRadius(searchRadius);
 
         List<Observation> measurements = GpxConversions.getEntries(gpx.trk.get(0));
         MatchResult matchResult = matching.match(measurements);

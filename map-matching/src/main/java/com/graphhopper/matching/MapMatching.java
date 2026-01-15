@@ -71,6 +71,7 @@ public class MapMatching {
     private final LocationIndexTree locationIndex;
     private double measurementErrorSigma = 10.0;
     private double transitionProbabilityBeta = 2.0;
+    private double searchRadius = 10.0;
     private final DistanceCalc distanceCalc = new DistancePlaneProjection();
     private QueryGraph queryGraph;
 
@@ -195,6 +196,15 @@ public class MapMatching {
         this.measurementErrorSigma = measurementErrorSigma;
     }
 
+    /**
+     * Search radius [m] for finding candidate road segments around each GPS point.
+     * This is independent of measurementErrorSigma to allow searching a larger area
+     * while still using tight GPS accuracy for emission probability calculation.
+     */
+    public void setSearchRadius(double searchRadius) {
+        this.searchRadius = searchRadius;
+    }
+
     public MatchResult match(List<Observation> observations) {
         List<Observation> filteredObservations = filterObservations(observations);
         statistics.put("filteredObservations", filteredObservations.size());
@@ -277,8 +287,8 @@ public class MapMatching {
     }
 
     public List<Snap> findCandidateSnaps(final double queryLat, final double queryLon) {
-        double rLon = (measurementErrorSigma * 360.0 / DistanceCalcEarth.DIST_EARTH.calcCircumference(queryLat));
-        double rLat = measurementErrorSigma / DistanceCalcEarth.METERS_PER_DEGREE;
+        double rLon = (searchRadius * 360.0 / DistanceCalcEarth.DIST_EARTH.calcCircumference(queryLat));
+        double rLat = searchRadius / DistanceCalcEarth.METERS_PER_DEGREE;
         Envelope envelope = new Envelope(queryLon, queryLon, queryLat, queryLat);
         for (int i = 0; i < 50; i++) {
             envelope.expandBy(rLon, rLat);
