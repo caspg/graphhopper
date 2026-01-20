@@ -111,7 +111,7 @@ graphhopper:
   graph.encoded_values: surface, bike_priority, bike_access, roundabout, bike_average_speed, average_slope, road_class,
                         bike_network, bike_road_access, foot_road_access, mtb_rating, hike_rating, country, racingbike_priority,
                         racingbike_access, racingbike_average_speed, mtb_priority, mtb_access, mtb_average_speed, track_type,
-                        get_off_bike
+                        get_off_bike, road_environment, mtb_network
 
   #### Speed, hybrid and flexible mode ####
 
