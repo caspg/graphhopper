@@ -131,6 +131,7 @@ public class MapMatchingResource {
         MapMatching matching = new MapMatching(graphHopper.getBaseGraph(), (LocationIndexTree) graphHopper.getLocationIndex(), mapMatchingRouterFactory.createMapMatchingRouter(hints));
         matching.setMeasurementErrorSigma(gpsAccuracy);
         matching.setSearchRadius(searchRadius);
+        matching.setCollectDebugInfo(debugMode);
 
         List<Observation> measurements = GpxConversions.getEntries(gpx.trk.get(0));
         MatchResult matchResult = matching.match(measurements);
