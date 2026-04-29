@@ -300,25 +300,24 @@ A fast and production-ready map visualization for the Desktop can be implemented
 
 # Features
 
--   Works out of the box with OpenStreetMap (osm/xml and pbf) and can be adapted to custom data
--   OpenStreetMap integration: stores and considers road type, speed limit, the surface, barriers, access restrictions, ferries, conditional access restrictions and more
--   GraphHopper is fast. And with the so called "Contraction Hierarchies" it can be even faster (enabled by default).
--   Memory efficient data structures, algorithms and [the low and high level API](./docs/core/low-level-api.md) is tuned towards ease of use and efficiency
--   Pre-built routing profiles: car, bike, racing bike, mountain bike, foot, hike, truck, bus, motorcycle, ...
--   [Customization of these profiles](./docs/core/profiles.md#custom-profiles) are possible. Read about it [here](https://www.graphhopper.com/blog/2020/05/31/examples-for-customizable-routing/).
--   Provides a powerful [web API](./docs/web/api-doc.md) that exposes the data from OpenStreetMap and allows customizing the vehicle profiles per request. With JavaScript and Java clients.
--   Provides [map matching](./map-matching) i.e. "snap to road".
--   Supports time-dependent public transit routing and reading [GTFS](./reader-gtfs/README.md).
--   Offers turn instructions in more than 45 languages. Contribute or improve [here](./docs/core/translations.md).
--   Displays and takes into account [elevation data](./docs/core/elevation.md).
--   Supports [alternative routes](https://discuss.graphhopper.com/t/alternative-routes/424).
--   Supports [turn costs and restrictions](./docs/core/turn-restrictions.md).
--   Offers country-specific routing via country rules.
--   Allows customizing routing behavior using custom areas.
--   The core uses only a few dependencies (hppc, jts, janino and slf4j).
--   Scales from small indoor-sized to world-wide-sized graphs.
--   Finds nearest point on street e.g. to get elevation or 'snap to road' or being used as spatial index (see [#1485](https://github.com/graphhopper/graphhopper/pull/1485)).
--   Calculates isochrones and [shortest path trees](https://github.com/graphhopper/graphhopper/pull/1577).
--   Shows the whole road network in the browser for debugging purposes ("vector tile support"), see [#1572](https://github.com/graphhopper/graphhopper/pull/1572).
--   Shows so called "path details" along a route like road_class or max_speed, see [#1142](https://github.com/graphhopper/graphhopper/pull/1142) or the web documentation.
--   Written in Java and simple to start for developers via Maven.
+ * Works out of the box with OpenStreetMap (osm/xml and pbf) and can be adapted to custom data
+ * OpenStreetMap integration: stores and considers road type, speed limit, the surface, barriers, access restrictions, ferries, conditional access restrictions and more
+ * GraphHopper is fast. And with the so called "Contraction Hierarchies" it can be even faster (enabled by default).
+ * Memory efficient data structures, algorithms and [the low and high level API](./docs/core/low-level-api.md) is tuned towards ease of use and efficiency
+ * Pre-built routing profiles: car, bike, racing bike, mountain bike, foot, hike, truck, bus, motorcycle, ...
+ * [Customization of these profiles](./docs/core/profiles.md#custom-profiles) are possible. Read about it [here](https://www.graphhopper.com/blog/2020/05/31/examples-for-customizable-routing/).
+ * Provides a powerful [web API](./docs/web/api-doc.md) that exposes the data from OpenStreetMap and allows customizing the vehicle profiles per request. With JavaScript and Java clients.
+ * Provides [map matching](./map-matching) i.e. "snap to road".
+ * Supports time-dependent public transit routing and reading [GTFS](./reader-gtfs/README.md).
+ * Offers turn instructions in more than 45 languages. Contribute or improve [here](./docs/core/translations.md).
+ * Displays and takes into account [elevation data](./docs/core/elevation.md).
+ * Supports [alternative routes](https://discuss.graphhopper.com/t/alternative-routes/424).
+ * Supports [turn costs and restrictions](./docs/core/turn-restrictions.md).
+ * Offers country-specific routing via country rules.
+ * Allows customizing routing behavior using custom areas.
+ * Scales from small indoor-sized to world-wide-sized graphs.
+ * Finds nearest point on street e.g. to get elevation or 'snap to road' or being used as spatial index (see [#1485](https://github.com/graphhopper/graphhopper/pull/1485)).
+ * Calculates isochrones and [shortest path trees](https://github.com/graphhopper/graphhopper/pull/1577).
+ * Shows the whole road network in the browser for debugging purposes ("vector tile support"), see [#1572](https://github.com/graphhopper/graphhopper/pull/1572).
+ * Shows so called "path details" along a route like road_class or max_speed, see [#1142](https://github.com/graphhopper/graphhopper/pull/1142) or the web documentation.
+ * Written in Java and simple to start for developers via Maven.
