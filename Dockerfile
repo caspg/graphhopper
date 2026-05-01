@@ -19,12 +19,9 @@ WORKDIR /graphhopper
 
 COPY --from=build /graphhopper/web/target/graphhopper*.jar ./
 
-COPY docker_entrypoint.sh config-velomapa.yml ./
-
-# enable custom cache_dir for elevation data
-RUN sed -i 's|# graph.elevation.cache_dir: REPLACED_BY_DOCKERFILE|graph.elevation.cache_dir: /data/srtm|' config-velomapa.yml
+COPY docker_entrypoint.sh ./
 
 
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
 
-ENTRYPOINT [ "./docker_entrypoint.sh", "-c", "config-velomapa.yml" ]
+ENTRYPOINT [ "./docker_entrypoint.sh" ]
