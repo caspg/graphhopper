@@ -32,7 +32,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayDeque;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -112,6 +112,9 @@ public class PMTilesElevationProvider implements ElevationProvider {
         }
     };
 
+    private static final int DEFAULT_MAX_CACHED_TILES = 50_000;
+    private int maxCachedTiles = DEFAULT_MAX_CACHED_TILES;
+
     private final TerrainEncoding encoding;
     private final boolean interpolate;
     private final int preferredZoom;
@@ -122,8 +125,23 @@ public class PMTilesElevationProvider implements ElevationProvider {
     private final PMTilesReader reader = new PMTilesReader();
 
     // Cache of packed tiles, keyed by Hilbert tile ID. Missing (or all-sea) tiles use marker objects.
-    // On-disk .tile files use the packed block format defined in PackedTileCodex.
-    private final Map<Long, PackedTileData> tileBuffers = new HashMap<>();
+    // On-disk .tile files use the packed block format defined in PackedTileCodec.
+    // LRU eviction frees MappedByteBuffer FDs to avoid "Too many open files" on large builds.
+    private final Map<Long, PackedTileData> tileBuffers = new LinkedHashMap<>(16, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<Long, PackedTileData> eldest) {
+            if (size() <= maxCachedTiles) return false;
+            PackedTileData evicted = eldest.getValue();
+            if (evicted != MISSING_TILE && evicted != SEA_LEVEL_TILE) {
+                evicted.release();
+            }
+            if (lastTileId == eldest.getKey()) {
+                lastTileId = -1;
+                lastTileBuf = null;
+            }
+            return true;
+        }
+    };
 
     // Last-tile cache: consecutive getEle() calls typically hit the same tile.
     private long lastTileId = -1;
@@ -180,6 +198,11 @@ public class PMTilesElevationProvider implements ElevationProvider {
 
     public PMTilesElevationProvider setAutoRemoveTemporaryFiles(boolean clearTileFiles) {
         this.clearTileFiles = clearTileFiles;
+        return this;
+    }
+
+    public PMTilesElevationProvider setMaxCachedTiles(int maxCachedTiles) {
+        this.maxCachedTiles = maxCachedTiles;
         return this;
     }
 
