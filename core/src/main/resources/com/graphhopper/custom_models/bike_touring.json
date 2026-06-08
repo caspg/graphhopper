@@ -9,10 +9,10 @@
     { "if": "bike_network == INTERNATIONAL", "multiply_by": "8"},
     { "else_if": "bike_network == NATIONAL", "multiply_by": "4"},
     { "else_if": "bike_network == REGIONAL || bike_network == LOCAL", "multiply_by": "3"},
-    { "if": "road_environment == FERRY", "multiply_by": "0.5" }
+    { "if": "road_environment == FERRY || road_environment == SHUTTLE_TRAIN", "multiply_by": "0.5" }
   ],
   "speed": [
-    { "if": "road_environment == FERRY", "limit_to": "ferry_speed" },
+    { "if": "road_environment == FERRY || road_environment == SHUTTLE_TRAIN", "limit_to": "ferry_speed" },
     { "else": "", "limit_to": "bike_average_speed" },
     { "if": "!bike_access && backward_bike_access", "limit_to": "5" }
   ]

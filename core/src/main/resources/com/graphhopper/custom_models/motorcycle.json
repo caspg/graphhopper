@@ -14,7 +14,7 @@
     // { "if": "urban_density != RURAL", "multiply_by": "0.3" },
   ],
   "speed": [
-    { "if": "road_environment == FERRY", "limit_to": "ferry_speed" },
+    { "if": "road_environment == FERRY || road_environment == SHUTTLE_TRAIN", "limit_to": "ferry_speed" },
     { "else": "", "limit_to": "0.9 * car_average_speed" },
     { "if": "true", "limit_to": "max_speed * 0.9" },
     { "if": "true", "limit_to": "120" },

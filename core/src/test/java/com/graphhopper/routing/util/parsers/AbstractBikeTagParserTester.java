@@ -312,6 +312,17 @@ public abstract class AbstractBikeTagParserTester {
     }
 
     @Test
+    public void testShuttleTrainAccess() {
+        ReaderWay way = new ReaderWay(366799360);
+        way.setTag("route", "shuttle_train");
+        way.setTag("bicycle", "yes");
+        assertTrue(accessParser.getAccess(way).isFerry());
+
+        way.setTag("bicycle", "no");
+        assertTrue(accessParser.getAccess(way).canSkip());
+    }
+
+    @Test
     public void testAvoidTunnel() {
         ReaderWay osmWay = new ReaderWay(1);
         osmWay.setTag("highway", "residential");
