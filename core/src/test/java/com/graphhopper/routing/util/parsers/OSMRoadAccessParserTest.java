@@ -212,6 +212,23 @@ class OSMRoadAccessParserTest {
     }
 
     @Test
+    void conditionalSeasonalNoIgnored() {
+        // access:conditional = no @ (Nov-Apr) is a seasonal closure; it must NOT become a permanent NO
+        ArrayEdgeIntAccess edgeIntAccess = new ArrayEdgeIntAccess(1);
+        int edgeId = 0;
+        ReaderWay way = new ReaderWay(30897678L);
+        way.setTag("highway", "secondary");
+        way.setTag("access:conditional", "no @ (Nov-Apr)");
+
+        bikeRAParser.handleWayTags(edgeId, edgeIntAccess, way, new IntsRef(1));
+        assertEquals(BikeRoadAccess.MISSING, bikeRAEnc.getEnum(false, edgeId, edgeIntAccess));
+
+        edgeIntAccess = new ArrayEdgeIntAccess(1);
+        parser.handleWayTags(edgeId, edgeIntAccess, way, new IntsRef(1));
+        assertNotEquals(RoadAccess.NO, roadAccessEnc.getEnum(false, edgeId, edgeIntAccess));
+    }
+
+    @Test
     void conditionalNonTemporalIgnored() {
         ArrayEdgeIntAccess edgeIntAccess = new ArrayEdgeIntAccess(1);
         int edgeId = 0;

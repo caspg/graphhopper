@@ -85,7 +85,12 @@ public class OSMRoadAccessParser<T extends Enum> implements TagParser {
         if (tagValue == null) return null;
         String[] strs = tagValue.split("@");
         if (strs.length == 2 && OSMTemporalAccessParser.hasTemporalSpec(strs[1])) {
-            return valueFinder.apply(strs[0].trim());
+            T value = valueFinder.apply(strs[0].trim());
+            // A temporal restriction that fully forbids access (e.g. "no @ (Nov-Apr)") is seasonal/
+            // time-limited and must not be encoded as a permanent NO (that would block the way year-round).
+            // Such restrictions are handled separately via the *_temporal_access encoded values.
+            if (value != null && "NO".equals(value.name())) return null;
+            return value;
         }
         return null;
     }

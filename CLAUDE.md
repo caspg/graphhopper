@@ -95,3 +95,21 @@ Key configuration sections:
 - 4-space indent, 100-char line width
 - IntelliJ defaults
 - Tests use JUnit 5
+
+## Git
+
+- **Stay on the current branch.** Never create or switch branches (`git checkout -b`,
+  `git switch -c`, `git branch`, `git checkout <other>`) unless I explicitly ask.
+  This overrides the default "if on the default branch, branch first" behavior —
+  work directly on whatever branch is checked out, even if it's `main`.
+- **Never `git push`** (any form) unless I explicitly ask. Crafting local commits
+  and tags is fine; publishing them is my decision.
+- **Commit only when I ask.** Otherwise leave the working tree dirty for review and
+  propose a commit message instead.
+
+## Notes
+
+- after finishing task, output proposed commit message
+- after finishing task run typecheck, tests and make sure there are no errors
+- after you finish task, run formatters to make sure code is formatted correctly
+- remember to cover changes with tests
