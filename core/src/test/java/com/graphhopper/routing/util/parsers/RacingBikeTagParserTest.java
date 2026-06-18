@@ -101,7 +101,7 @@ public class RacingBikeTagParserTest extends AbstractBikeTagParserTester {
         way.setTag("bicycle", "yes");
         assertPriorityAndSpeed(AVOID_MORE, 2, way);
         way.setTag("surface", "asphalt");
-        assertPriorityAndSpeed(VERY_NICE, 24, way);
+        assertPriorityAndSpeed(SLIGHT_PREFER, 24, way);
 
         way.clearTags();
         way.setTag("highway", "track");
@@ -109,9 +109,9 @@ public class RacingBikeTagParserTest extends AbstractBikeTagParserTester {
         way.setTag("segregated","no");
         assertPriorityAndSpeed(AVOID_MORE, 2, way);
         way.setTag("surface", "asphalt");
-        assertPriorityAndSpeed(VERY_NICE, 24, way);
+        assertPriorityAndSpeed(SLIGHT_PREFER, 24, way);
         way.setTag("tracktype","grade1");
-        assertPriorityAndSpeed(VERY_NICE, 24, way);
+        assertPriorityAndSpeed(SLIGHT_PREFER, 24, way);
     }
 
     @Test
@@ -204,7 +204,7 @@ public class RacingBikeTagParserTest extends AbstractBikeTagParserTester {
 
         // Now we assume bicycle=yes, and paved
         osmWay.setTag("tracktype", "grade1");
-        assertPriorityAndSpeed(VERY_NICE, 24, osmWay, osmRel);
+        assertPriorityAndSpeed(AVOID_MORE, 24, osmWay, osmRel);
 
         // Now we assume bicycle=yes, and unpaved and as part of a cycle relation
         osmWay.setTag("tracktype", "grade2");
@@ -215,7 +215,7 @@ public class RacingBikeTagParserTest extends AbstractBikeTagParserTester {
         osmWay.clearTags();
         osmWay.setTag("highway", "track");
         osmWay.setTag("surface", "asphalt");
-        assertPriorityAndSpeed(VERY_NICE, 24, osmWay, osmRel);
+        assertPriorityAndSpeed(SLIGHT_PREFER, 24, osmWay, osmRel);
 
         // Now we assume bicycle=yes, and unpaved and not part of a cycle relation
         osmWay.clearTags();

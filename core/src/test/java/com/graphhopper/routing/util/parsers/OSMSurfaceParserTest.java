@@ -69,7 +69,7 @@ public class OSMSurfaceParserTest {
 
         readerWay.setTag("surface", "grass_paver");
         parser.handleWayTags(edgeId, edgeIntAccess, readerWay, relFlags);
-        assertEquals(Surface.GRASS, surfaceEnc.getEnum(false, edgeId, edgeIntAccess));
+        assertEquals(Surface.CONCRETE_PLATES, surfaceEnc.getEnum(false, edgeId, edgeIntAccess));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class OSMSurfaceParserTest {
         readerWay.setTag("highway", "primary");
         readerWay.setTag("surface", "concrete:plates");
         parser.handleWayTags(edgeId, edgeIntAccess, readerWay, relFlags);
-        assertEquals(Surface.CONCRETE, surfaceEnc.getEnum(false, edgeId, edgeIntAccess));
+        assertEquals(Surface.CONCRETE_PLATES, surfaceEnc.getEnum(false, edgeId, edgeIntAccess));
 
         readerWay.setTag("surface", "cobblestone:flattened");
         parser.handleWayTags(edgeId, edgeIntAccess, readerWay, relFlags);

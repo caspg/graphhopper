@@ -16,7 +16,7 @@ public class OSMGetOffBikeParserTest {
     private final OSMGetOffBikeParser getOffParser;
 
     public OSMGetOffBikeParserTest() {
-        EncodingManager em = new EncodingManager.Builder().add(offBikeEnc).add(VehicleAccess.create("bike")).add(Roundabout.create()).build();
+        EncodingManager em = new EncodingManager.Builder().add(offBikeEnc).add(VehicleAccess.create("bike")).add(Roundabout.create()).add(RouteNetwork.create(BikeNetwork.KEY)).build();
         accessParser = new BikeAccessParser(em, new PMap());
         getOffParser = new OSMGetOffBikeParser(offBikeEnc, accessParser.getAccessEnc());
     }

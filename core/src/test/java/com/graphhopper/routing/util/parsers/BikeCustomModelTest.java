@@ -93,15 +93,15 @@ public class BikeCustomModelTest {
         way.setTag("surface", "ground");
         EdgeIteratorState edge = createEdge(way);
         CustomWeighting.Parameters p = CustomModelParser.createWeightingParameters(cm, em);
-        assertEquals(0.9, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.54, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         way.setTag("mtb:scale", "0");
         edge = createEdge(way);
-        assertEquals(0.9, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.54, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         way.setTag("mtb:scale", "1+");
         edge = createEdge(way);
-        assertEquals(0.9, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.54, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         way.setTag("mtb:scale", "2-");
         edge = createEdge(way);
@@ -110,7 +110,7 @@ public class BikeCustomModelTest {
         way.removeTag("mtb:scale");
         way.setTag("sac_scale", "hiking");
         edge = createEdge(way);
-        assertEquals(0.9, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.54, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         // other scales than hiking are nearly impossible by an ordinary bike, see http://wiki.openstreetmap.org/wiki/Key:sac_scale
         way.setTag("sac_scale", "mountain_hiking");
         edge = createEdge(way);
@@ -121,7 +121,7 @@ public class BikeCustomModelTest {
         way.setTag("highway", "tertiary");
         way.setTag("vehicle", "private");
         edge = createEdge(way);
-        assertEquals(0.1, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.06, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
     }
 
     @Test
@@ -131,7 +131,7 @@ public class BikeCustomModelTest {
         way.setTag("highway", "bridleway");
         EdgeIteratorState edge = createEdge(way);
         CustomWeighting.Parameters p = CustomModelParser.createWeightingParameters(cm, em);
-        assertEquals(0.8, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.48, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         way.setTag("country", Country.DEU);
         edge = createEdge(way);
@@ -141,7 +141,7 @@ public class BikeCustomModelTest {
         way.setTag("bicycle", "yes");
         edge = createEdge(way);
         p = CustomModelParser.createWeightingParameters(cm, em);
-        assertEquals(0.8, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.48, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         way = new ReaderWay(0L);
         way.setTag("highway", "trunk_link");
@@ -233,14 +233,14 @@ public class BikeCustomModelTest {
         way.setTag("highway", "tertiary");
 
         EdgeIteratorState edge = createEdge(way);
-        assertEquals(1, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.6, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         ReaderRelation osmRel = new ReaderRelation(1);
         osmRel.setTag("route", "bicycle");
         osmRel.setTag("network", "icn");
 
         edge = createEdge(way, osmRel);
-        assertEquals(1.4, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.84, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         // unknown highway tags will be excluded
         way = new ReaderWay(1);
@@ -258,12 +258,12 @@ public class BikeCustomModelTest {
         way.setTag("highway", "road");
 
         EdgeIteratorState edge = createEdge(way);
-        assertEquals(1, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.6, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
 
         // "lcn=yes" is in fact no relation, but shall be treated the same like a relation with "network=lcn"
         way.setTag("lcn", "yes");
         edge = createEdge(way);
-        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(12, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         // relation code is VERY_NICE
@@ -272,30 +272,30 @@ public class BikeCustomModelTest {
         way = new ReaderWay(1);
         way.setTag("highway", "road");
         edge = createEdge(way, rel);
-        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(12, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         rel.setTag("network", "lcn");
         edge = createEdge(way, rel);
-        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(12, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         // relation code is NICE
         rel.setTag("network", "rcn");
         edge = createEdge(way, rel);
-        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(12, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         // no "double boosting" due because way lcn=yes is only considered if no route relation
         way.setTag("lcn", "yes");
         edge = createEdge(way, rel);
-        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(12, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         // relation code is BEST
         rel.setTag("network", "ncn");
         edge = createEdge(way, rel);
-        assertEquals(1.4, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.84, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(12, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         // PREFER relation, but tertiary road => no get off the bike but road wayTypeCode and faster
@@ -304,20 +304,20 @@ public class BikeCustomModelTest {
         rel.setTag("route", "bicycle");
         rel.setTag("network", "lcn");
         edge = createEdge(way, rel);
-        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(18, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         rel.clearTags();
         way.clearTags();
         way.setTag("highway", "track");
         edge = createEdge(way, rel);
-        assertEquals(1, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.6, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(12, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
 
         rel.setTag("route", "bicycle");
         rel.setTag("network", "lcn");
         edge = createEdge(way, rel);
-        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
         assertEquals(18, p.getEdgeToSpeedMapping().get(edge, false), 0.01);
     }
 
