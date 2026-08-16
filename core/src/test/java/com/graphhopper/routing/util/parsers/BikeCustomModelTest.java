@@ -51,6 +51,7 @@ public class BikeCustomModelTest {
                 add(RoadAccess.create()).
                 add(bikeRA).
                 add(FootRoadAccess.create()).
+                add(Cycleway.create()).
                 add(bikeRating).
                 add(hikeRating).build();
 
@@ -66,7 +67,8 @@ public class BikeCustomModelTest {
                 addWayTagParser(new BikePriorityParser(em)).
                 addWayTagParser(new MountainBikePriorityParser(em)).
                 addWayTagParser(new RacingBikePriorityParser(em)).
-                addWayTagParser(OSMRoadAccessParser.forBike(bikeRA));
+                addWayTagParser(OSMRoadAccessParser.forBike(bikeRA)).
+                addWayTagParser(new OSMCyclewayParser(em.getEnumEncodedValue(Cycleway.KEY, Cycleway.class)));
 
         parsers.addRelationTagParser(relConfig -> new OSMBikeNetworkTagParser(em.getEnumEncodedValue(BikeNetwork.KEY, RouteNetwork.class), relConfig, "bicycle")).
                 addRelationTagParser(relConfig -> new OSMBikeNetworkTagParser(em.getEnumEncodedValue(MtbNetwork.KEY, RouteNetwork.class), relConfig, "mtb"));
@@ -122,6 +124,72 @@ public class BikeCustomModelTest {
         way.setTag("vehicle", "private");
         edge = createEdge(way);
         assertEquals(0.06, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+    }
+
+    @Test
+    public void testPrimaryWithCyclewayTrack() {
+        // based on OSM way 84203496 (Segeberger Straße): a primary road with a segregated
+        // cycle track must not lose its bike_priority bonus to the non-cycleway penalty
+        CustomModel cm = GHUtility.loadCustomModelFromJar("bike.json");
+        CustomWeighting.Parameters p = CustomModelParser.createWeightingParameters(cm, em);
+
+        ReaderWay way = new ReaderWay(1);
+        way.setTag("highway", "primary");
+        way.setTag("maxspeed", "50");
+        way.setTag("surface", "asphalt");
+        way.setTag("cycleway", "track");
+        way.setTag("cycleway:left:bicycle", "designated");
+        way.setTag("cycleway:right:bicycle", "designated");
+        EdgeIteratorState edge = createEdge(way);
+        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, true), 0.01);
+
+        // a one-sided track only lifts the penalty for the direction that has it (right=forward)
+        way = new ReaderWay(1);
+        way.setTag("highway", "primary");
+        way.setTag("cycleway:right", "track");
+        edge = createEdge(way);
+        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, true), 0.01);
+
+        // a residential back street must not beat a primary with a cycle track
+        way = new ReaderWay(1);
+        way.setTag("highway", "residential");
+        edge = createEdge(way);
+        assertEquals(0.72, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+
+        // primary explicitly without cycle infrastructure stays heavily penalized
+        way = new ReaderWay(1);
+        way.setTag("highway", "primary");
+        way.setTag("cycleway", "no");
+        edge = createEdge(way);
+        assertEquals(0.3, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+
+        way.setTag("bicycle", "no");
+        edge = createEdge(way);
+        assertEquals(0.0, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+
+        way = new ReaderWay(1);
+        way.setTag("highway", "primary");
+        way.setTag("bicycle", "use_sidepath");
+        edge = createEdge(way);
+        assertEquals(0.06, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+    }
+
+    @Test
+    public void testTouringPrimaryWithCyclewayTrack() {
+        CustomModel cm = GHUtility.loadCustomModelFromJar("bike_touring.json");
+        CustomWeighting.Parameters p = CustomModelParser.createWeightingParameters(cm, em);
+
+        ReaderWay way = new ReaderWay(1);
+        way.setTag("highway", "primary");
+        way.setTag("cycleway", "track");
+        EdgeIteratorState edge = createEdge(way);
+        assertEquals(1.2, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
+
+        way.removeTag("cycleway");
+        edge = createEdge(way);
+        assertEquals(0.4, p.getEdgeToPriorityMapping().get(edge, false), 0.01);
     }
 
     @Test

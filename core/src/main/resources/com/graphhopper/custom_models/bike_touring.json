@@ -5,7 +5,7 @@
     { "if": "hike_rating > 1",  "multiply_by": "0" },
     { "if": "!bike_access && (!backward_bike_access || roundabout)",  "multiply_by": "0" },
     { "else_if": "!bike_access && backward_bike_access",  "multiply_by": "0.2" },
-    { "if": "road_class != CYCLEWAY", "multiply_by": 0.8 },
+    { "if": "road_class != CYCLEWAY && cycleway != TRACK", "multiply_by": 0.8 },
     { "if": "bike_network == INTERNATIONAL", "multiply_by": "8"},
     { "else_if": "bike_network == NATIONAL", "multiply_by": "4"},
     { "else_if": "bike_network == REGIONAL || bike_network == LOCAL", "multiply_by": "3"},
